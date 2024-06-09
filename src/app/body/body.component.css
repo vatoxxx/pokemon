@@ -1,0 +1,27 @@
+
+
+
+.hero-container {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+  margin-top: 85px; /* Ensure the carousel is below the navbar */
+}
+
+.carousel, .carousel-inner, .carousel-item {
+  height: 100%;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  color: white;
+}
+

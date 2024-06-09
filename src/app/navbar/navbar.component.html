@@ -1,0 +1,81 @@
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">PokePlanner</a>
+    <img src="../../../favicon.ico">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#" routerLink="/Home">Inicio</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class='bx bx-box'></i> Mazos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li>
+              <a class="dropdown-item sub" routerLink="/Decks">Todos Los Mazos</a>
+            </li>
+            <li>
+              <a class="dropdown-item sub" href="#">Another action</a>
+            </li>
+            <li>
+              <a class="dropdown-item sub" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Tipos De Mazo <i class='bx bx-chevron-right'></i>
+              </a>
+              <ul class="dropdown-menu dropdown-submenu">
+                <li>
+                  <a class="dropdown-item sub" href="#">Mazo Standar</a>
+                </li>
+                <li>
+                  <a class="dropdown-item sub" href="#">Mazo Expanded</a>
+                </li>
+                <li>
+                  <a class="dropdown-item sub" href="#">Mazo Unlimited</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class='bx bxs-layer'></i> Cartas
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item sub" routerLink="/Cards">Todas Las Cartas</a></li>
+            <li><a class="dropdown-item sub" href="#">Expansiones</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item sub" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Link</a>
+        </li>
+      </ul>
+      <div *ngIf="!isAuthenticated; else loggedInTemplate">
+        <button routerLink="/Login">
+          <span class="box">
+              Inicia Sesion
+          </span>
+        </button>
+      </div>
+      <ng-template #loggedInTemplate>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img [src]="currentUser.photo" class="rounded-circle" alt="Profile Picture" width="30" height="30">
+            {{ currentUser.username }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="/favorite-cards">Tus Cartas Favoritas</a></li>
+            <li><a class="dropdown-item" routerLink="/profile">Tu Perfil</a></li>
+            <li><a class="dropdown-item" routerLink="/my-decks">Tus Mazos de Cartas</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" (click)="logout()">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</nav>

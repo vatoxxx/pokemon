@@ -1,0 +1,35 @@
+
+
+  <div class="hero-container">
+    <carousel>
+      <slide *ngFor="let slide of slides; let index = index" [active]="index === 0">
+        <img [src]="slide.image" alt="Image slide {{ index + 1 }}" class="d-block w-100">
+        <div class="carousel-caption">
+          <h3>{{ slide.captionTitle }}</h3>
+          <p>{{ slide.captionText }}</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+
+  <div class="container">
+    <div *ngIf="selectedCard">
+      <h2>{{ selectedCard.data.name }}</h2>
+      <img [src]=" selectedCard.data.images.small " alt=" {{selectedCard.data.name}}">
+    </div>
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3" *ngFor="let card of pokemonCards">
+        <a class="product-card">
+          <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image">
+          <p class="product-card__name">{{ card.name }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+

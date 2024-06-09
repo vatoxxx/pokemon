@@ -1,0 +1,42 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+
+
+.content {
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+}
+
+footer {
+  background-color: rgb(235, 233, 233);
+  color: #333;
+}
+
+footer a {
+  color: #333;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer h5 {
+  font-weight: 700;
+}
+
+footer p, footer li {
+  font-weight: 400;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
