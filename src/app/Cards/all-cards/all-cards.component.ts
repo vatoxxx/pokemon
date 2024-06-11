@@ -7,26 +7,60 @@ import { PokemonService } from '../../pokemon.service';
   styleUrl: './all-cards.component.css'
 })
 export class AllCardsComponent implements OnInit {
+
+
+
+  pokemonSets: any[] = [];
+  pokemonCards: any[] = [];
+  pokemonTypes: any[] = [];
+  pokemonSubtypes: any[] = [];
+  pokemonSupertypes: any[] = [];
+  pokemonRarities: any[] = [];
   searchTerm: string = '';
-  filters: any = {}; // Aquí almacenarás los filtros seleccionados
+  filters: any = {};
+  currentPage: number = 1;
+  pageSize: number = 20;
+  totalPages: number = 0;
 
-  constructor(private cardService: PokemonService) {}
+  constructor(private pokemonService: PokemonService) {}
 
-  ngOnInit(): void {}
 
-  searchCards() {
-    if (Object.keys(this.filters).length === 0) {
-      // Si no hay filtros, buscar por nombre
-      this.cardService.searchCardsByName(this.searchTerm).subscribe(cards => {
-        // Procesa las cartas obtenidas
-        console.log(cards);
-      });
-    } else {
-      // Si hay filtros, aplicarlos y buscar
-      this.cardService.searchCardsWithFilters(this.filters).subscribe(cards => {
-        // Procesa las cartas obtenidas
-        console.log(cards);
-      });
+
+  ngOnInit(): void {
+    this.searchCards();
+    this.loadFilters();
+  }
+
+
+  loadFilters(): void {
+    this.pokemonService.getAllSets().subscribe(data => this.pokemonSets = data.data);
+    this.pokemonService.getAllTypes().subscribe(data => this.pokemonTypes = data.data);
+    this.pokemonService.getAllSubtypes().subscribe(data => this.pokemonSubtypes = data.data);
+    this.pokemonService.getAllSupertypes().subscribe(data => this.pokemonSupertypes = data.data);
+    this.pokemonService.getAllRarities().subscribe(data => this.pokemonRarities = data.data);
+  }
+
+  searchCards(): void {
+    this.pokemonService.searchCards(this.filters, this.searchTerm, this.currentPage, this.pageSize).subscribe(data => {
+      this.pokemonCards = data.data;
+      this.totalPages = Math.ceil(data.totalCount / this.pageSize);
+    });
+  }
+
+
+
+  goToNextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.searchCards();
     }
   }
+
+  goToPreviousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.searchCards();
+    }
+  }
+
 }

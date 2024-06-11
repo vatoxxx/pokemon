@@ -45,14 +45,12 @@ export class BodyComponent {
       });
   }
 
-  async getPokemonCardById(id:string): Promise<void> {
-    try {
-       this.selectedCard = await this.pokemonService.getPokemonCardById(id);
-      console.log('Carta obtenida:', this.selectedCard);
-      console.log(this.selectedCard.data.name)
-    } catch (error) {
-      console.error('Error al obtener la carta:', error);
-    }
+   getPokemonCardById(id:string):void {
+    this.pokemonService.getPokemonCardById(id)
+    .subscribe((data: any) => {
+      this.selectedCard = data;
+    });
+
   }
 
 

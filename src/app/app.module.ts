@@ -15,7 +15,13 @@ import { FormsModule } from '@angular/forms';
 import { AllDecksComponent } from './Decks/all-decks/all-decks.component';
 import { StandardComponent } from './Decks/standard/standard.component';
 import { AllCardsComponent } from './Cards/all-cards/all-cards.component';
-import { ExpansionsComponent } from './Cards/expansions/expansions.component'; // Importa FormsModule
+import { ExpansionsComponent } from './Cards/expansions/expansions.component';
+import { CardDetailComponent } from './Cards/card-detail/card-detail.component';
+import { ExpansionDetailComponent } from './Cards/expansion-detail/expansion-detail.component';
+import { CardsBannedComponent } from './Cards/cards-banned/cards-banned.component';
+import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
+import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
+import { UserFavcardsComponent } from './Profile/user-favcards/user-favcards.component';
 
 
 @NgModule({
@@ -28,7 +34,13 @@ import { ExpansionsComponent } from './Cards/expansions/expansions.component'; /
     AllDecksComponent,
     StandardComponent,
     AllCardsComponent,
-    ExpansionsComponent
+    ExpansionsComponent,
+    CardDetailComponent,
+    ExpansionDetailComponent,
+    CardsBannedComponent,
+    UserProfileComponent,
+    UserDecksComponent,
+    UserFavcardsComponent
   ],
   imports: [
     BrowserModule,

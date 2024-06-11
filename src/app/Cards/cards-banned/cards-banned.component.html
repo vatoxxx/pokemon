@@ -1,0 +1,61 @@
+<div class="container">
+  <h1>Cartas Baneadas</h1>
+  <p>Esta es la lista de cartas restringidas para el Juego de Cartas Coleccionables Pokémon. Toda la información sobre la lista de restringidos puede ser encontrada <a href="https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-banned-card-list">aquí</a>.</p>
+  <p>La lista de cartas restringidas es únicamente para torneos oficialmente sancionados.</p>
+
+  <br>
+  <br>
+
+
+
+
+
+  <h1>Standard</h1>
+    @if (pokemonCardsS.length == 0) {
+        <div class="no-results">
+          <p>No se encontraron cartas en el formato Estándar.</p>
+        </div>
+    }@else{
+      <div class="row">
+        <div class="col-md-3" *ngFor="let card of pokemonCardsS">
+          <a class="product-card">
+            <a [routerLink]="['/Cards', card.id]">
+              <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image">
+            </a>
+            <a [routerLink]="['/Cards', card.id]">
+              <p class="product-card__name">{{ card.name }}</p>
+            </a>
+          </a>
+        </div>
+      </div>
+
+    }
+
+
+  <h1>Expanded</h1>
+  <div class="row">
+    <div class="col-md-3" *ngFor="let card of pokemonCardsE">
+      <a class="product-card">
+        <a [routerLink]="['/Cards', card.id]">
+          <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image">
+        </a>
+        <a [routerLink]="['/Cards', card.id]">
+          <p class="product-card__name">{{ card.name }}</p>
+        </a>
+      </a>
+    </div>
+  </div>
+  <h1>Ulimited</h1>
+  <div class="row">
+    <div class="col-md-3" *ngFor="let card of pokemonCardsU">
+      <a class="product-card">
+        <a [routerLink]="['/Cards', card.id]">
+          <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image">
+        </a>
+        <a [routerLink]="['/Cards', card.id]">
+          <p class="product-card__name">{{ card.name }}</p>
+        </a>
+      </a>
+    </div>
+  </div>
+</div>

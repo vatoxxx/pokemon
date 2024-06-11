@@ -8,8 +8,10 @@ import { environment } from './api';
 })
 export class PokemonService {
 
+  private apiUrlfilters = 'https://api.pokemontcg.io/v2';
   private apiUrl = 'https://api.pokemontcg.io/v2/cards';
   private apiUrlnueva = 'https://api.pokemontcg.io/v2/cards?q=set.releaseDate:2024*&pageSize=20';
+  private apiUrlSets = 'https://api.pokemontcg.io/v2/sets';
 /*  private apiUrlnueva = 'https://api.pokemontcg.io/v2/sets?q=releaseDate:*&orderBy=-releaseDate&pageSize=5'; */
 
 
@@ -25,33 +27,151 @@ export class PokemonService {
     return this.http.get(`${this.apiUrlnueva}`, { headers });
   }
 
-  async getPokemonCardById(id: string): Promise<any> {
+
+  getPokemonCardById(id: string|null): Observable<any> {
     const headers = new HttpHeaders({
       'X-Api-Key': this.apiKey
     });
 
-    try {
-      const response = await this.http.get(`${this.apiUrl}/${id}`, { headers }).toPromise();
-      return response;
-    } catch (error) {
-      console.error('Error al obtener la carta:', error);
-      throw error; // Puedes manejar el error de otra manera si lo deseas
-    }
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers });
+  }
+
+
+
+  getSetsOrderedByReleaseDate(page: number, pageSize: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-Api-Key': this.apiKey
+    });
+
+    let params = new HttpParams()
+      .set('orderBy', '-releaseDate')
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<any>(this.apiUrlSets, { headers, params });
+  }
+
+
+  getSetById(id: string|null): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-Api-Key': this.apiKey
+    });
+
+    return this.http.get<any>(`${this.apiUrlSets}/${id}`, { headers });
   }
 
 
 
 
 
-  searchCardsByName(name: string): Observable<any> {
-    const params = new HttpParams().set('q', `name:${name}`);
-    return this.http.get<any>(this.apiUrl, { params });
-  }
 
-  searchCardsWithFilters(filters: any): Observable<any> {
-    // Implementa la lógica para aplicar los filtros a la solicitud HTTP
-    // Puedes consultar la documentación de pokemontcg.io para saber cómo aplicar filtros específicos
-    return this.http.get<any>(this.apiUrl, { params: filters });
-  }
+ // Obtener todos los sets
+ getAllSets(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrlfilters}/sets`, { headers });
 }
 
+// Obtener todos los tipos
+getAllTypes(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrlfilters}/types`, { headers });
+}
+
+
+
+// Obtener todos los subtipos
+getAllSubtypes(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrlfilters}/subtypes`, { headers });
+}
+
+// Obtener todos los supertipos
+getAllSupertypes(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrlfilters}/supertypes`, { headers });
+}
+
+// Obtener todas las rarezas
+getAllRarities(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrlfilters}/rarities`, { headers });
+}
+
+// Buscar cartas con filtros
+searchCards(filters: any|null, searchTerm: string, page: number, pageSize: number): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  let query = '';
+  if (searchTerm) {
+    query += `name:${searchTerm}* `;
+  }
+  if (filters.set) {
+    query += `set.id:${filters.set} `;
+  }
+  if (filters.type) {
+    query += `types:${filters.type} `;
+  }
+  if (filters.subtype) {
+    query += `subtypes:${filters.subtype} `;
+  }
+  if (filters.supertype) {
+    query += `supertypes:${filters.supertype} `;
+  }
+  if (filters.rarity) {
+    query += `rarity:${filters.rarity} `;
+  }
+  if (filters.legalities) {
+    query += `legalities.${filters.legalities}:legal `;
+  }
+
+  const offset = (page - 1) * pageSize;
+  return this.http.get<any>(`${this.apiUrl}?q=${query.trim()}&page=${page}&pageSize=${pageSize}&orderBy=name,releaseDate`, { headers });
+}
+
+
+getStandardBanned(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrl}?q=legalities.standard:banned`, { headers });
+}
+
+getExpandedBanned(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrl}?q=legalities.expanded:banned`, { headers });
+}
+
+getUnlimitedBanned(): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  return this.http.get<any>(`${this.apiUrl}?q=legalities.unlimited:banned`, { headers });
+}
+
+
+
+
+
+}

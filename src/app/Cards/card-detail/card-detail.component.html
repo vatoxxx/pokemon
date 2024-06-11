@@ -1,0 +1,12 @@
+<div class="container">
+  <div *ngIf="card">
+    <h1>{{ card.name }}</h1>
+    <img [src]="card.data.images.small" alt="{{ card.data.name }}">
+    <p>Set: {{ card.data.set.name }}</p>
+    <p>Release Date: {{ card.data.set.releaseDate }}</p>
+    <p>Type: {{ card.data.types.join(', ') }}</p>
+    <p>Rarity: {{ card.data.rarity }}</p>
+    <p>{{ card.data.flavorText }}</p>
+    <!-- Añadir más detalles según sea necesario -->
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="container">
+  <div *ngIf="set">
+    <h1>{{ set.data.name }}</h1>
+     <img [src]="set.data.images.logo" alt="{{ set.name }}">
+    <p>Release Date: {{ set.data.releaseDate }}</p>
+    <p>Total Cards: {{ set.data.printedTotal }}</p>
+    <p>Series: {{ set.data.series }}</p>
+    <!-- Añadir más detalles según sea necesario -->
+  </div>
+</div>

@@ -1,0 +1,45 @@
+.container{
+  margin-top: 10%;
+
+  margin-bottom: 8%;
+
+	background-color: #fff;
+	border-radius: 10px;
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+			0 10px 10px rgba(0,0,0,0.22);
+	position: relative;
+	overflow: hidden;
+	width: 950px;
+	max-width: 100%;
+  width: 1200px;
+	min-height: 480px;
+}
+
+.product-set_image {
+  width: 100px; /* Ajusta este valor al tamaño deseado */
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: contain; /* Ajusta la imagen dentro del contenedor manteniendo sus proporciones */
+  display: block;
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+a {
+  position: relative;
+  text-decoration: none;
+}
+
+
