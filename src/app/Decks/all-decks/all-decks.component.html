@@ -1,1 +1,11 @@
+<div class="container">
+  <div *ngFor="let mazo of mazos">
+    <h2>{{ mazo.name }}</h2>
+    <p>{{ mazo.description }}</p>
+    <p>Fecha de creación: {{ mazo.creationDate }}</p>
+    <p>Tipo: {{ mazo.type }}</p>
+    <img [src]="mazo.image"  alt="Imagen del Mazo" width="150" height="150" [routerLink]="['/Decks', mazo.id]">
+
+  </div>
+</div>
 

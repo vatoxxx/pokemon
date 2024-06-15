@@ -51,9 +51,9 @@ export class DecksService {
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  veralldecks(): Observable<any> {
+  veralldecks(): Observable<DeckDTO[]> {
 
-    return this.http.get<any>(`${this.baseUrl}/all`).pipe(tap(response => console.log(response)),catchError(error=>{
+    return this.http.get<DeckDTO[]>(`${this.baseUrl}/all`).pipe(tap(response => console.log(response)),catchError(error=>{
       return throwError(error);
     }));
   }
@@ -95,6 +95,16 @@ export class DecksService {
 
   getDeckbyid(deckid: number|null): Observable<DeckDTO> {
     return this.http.get<DeckDTO>(`${this.baseUrl}/${deckid}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener los mazos:', error);
+          throw error; // Lanzar el error para que lo maneje el componente que llama a este método
+        })
+      );
+  }
+
+  getDecksByType(type: string|null): Observable<DeckDTO[]> {
+    return this.http.get<DeckDTO[]>(`${this.baseUrl}/type/${type}`)
       .pipe(
         catchError(error => {
           console.error('Error al obtener los mazos:', error);

@@ -1,4 +1,7 @@
-<div class="container">
+<div class="bodylog">
+  <div class="background-image">
+    <div class="gradient-overlay">
+      <div class="container">
   <!-- Filtros -->
   <div class="filters">
     <select [(ngModel)]="filters.set" (change)="searchCards()">
@@ -46,7 +49,7 @@
 
   <!-- Resultados -->
   <div class="row">
-    <div class="col-md-3" *ngFor="let card of pokemonCards">
+    <div class="col-md-2" *ngFor="let card of pokemonCards">
       <a class="product-card">
         <a [routerLink]="['/Cards', card.id]">
           <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image">
@@ -63,4 +66,8 @@
     <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">Previo</button>
     <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
+      </div>
+    </div>
+  </div>
 </div>
+

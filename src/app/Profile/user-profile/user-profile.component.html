@@ -2,20 +2,18 @@
   <h1>Tu Perfil</h1>
   <div *ngIf="currentUser">
     <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
-      <div class="form-group">
-        <label for="email">Email</label>
+      <div class="profile-info">
+        <div class="profile-picture">
+          <img [src]="currentUser.photo" alt="Profile Picture" width="80" height="80">
+          <input type="file" (change)="onFileSelected($event)" class="form-control">
+        </div>
+        <div class="username">
+          <p>{{ currentUser.username }}</p>
+
+        </div>
         <p>{{ currentUser.email }}</p>
       </div>
-      <div class="form-group">
-        <label for="photo">Foto de Perfil</label>
-        <img [src]="currentUser.photo" class="rounded-circle" alt="Profile Picture" width="30" height="30">
-        <input type="file" (change)="onFileSelected($event)" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <p>{{ currentUser.username }}</p>
-      </div>
-      <div class="form-group">
+      <div class="bio">
         <label for="bio">Biografía</label>
         <textarea [(ngModel)]="currentUser.bio" name="bio" id="bio" class="form-control" rows="3"></textarea>
       </div>

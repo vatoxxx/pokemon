@@ -14,6 +14,7 @@ import { BuildDeckComponent } from './Decks/build-deck/build-deck.component';
 import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
 import { DeckDetailComponent } from './Decks/deck-detail/deck-detail.component';
 import { LoginGuard } from './LoginGuard';
+import { StandardComponent } from './Decks/standard/standard.component';
 
 const routes: Routes = [
 {path:'',component:BodyComponent},
@@ -26,9 +27,11 @@ const routes: Routes = [
 { path: 'Cards/:id', component: CardDetailComponent },
 { path: 'Banned', component: CardsBannedComponent },
 { path: 'Profile', component: UserProfileComponent ,canActivate: [LoginGuard]},
-{ path: 'Build', component: BuildDeckComponent },
+{ path: 'Build', component: BuildDeckComponent, canActivate: [LoginGuard]},
 { path: 'User-Decks', component: UserDecksComponent,canActivate: [LoginGuard] },
-{ path: 'Decks/:id', component: DeckDetailComponent }
+{ path: 'Decks/:id', component: DeckDetailComponent },
+{ path: 'Decks/Type/:tipo', component: StandardComponent },
+{ path: '**', redirectTo: '/Home' }
 
 
 

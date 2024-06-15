@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { PokemonCard, PokemonService, PokemonSet } from '../../pokemon.service';
 import { DecksService } from '../../decks.service';
+import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-build-deck',
@@ -20,6 +22,8 @@ export class BuildDeckComponent {
   pageSize: number = 20;
   totalPages: number = 1;
 
+  deckCoverImage = '';
+
   pokemonCards: PokemonCard[] = [];
   deck: PokemonCard[] = [];
 
@@ -29,15 +33,17 @@ export class BuildDeckComponent {
   deckDescription = '';
   Deckimage: File | null = null;
 
-  userId: number = 1; // Placeholder, replace with actual user ID
+ userid:number=0;
 
   currentTotalQuantity: number = 0; // Define currentTotalQuantity as a property
 
-  constructor(private pokemonService: PokemonService, private decks: DecksService) {}
+  constructor(private pokemonService: PokemonService, private decks: DecksService,private authService:AuthService) {}
 
   ngOnInit(): void {
     this.searchCards();
     this.loadFilters();
+
+
   }
 
   loadFilters(): void {
@@ -48,7 +54,20 @@ export class BuildDeckComponent {
     this.pokemonService.getAllRarities().subscribe(data => (this.pokemonRarities = data.data));
   }
 
+  sanitizeFilter(value: string): string {
+    return value.replace(/\s+/g, '*');
+  }
+
   searchCards() {
+
+    this.filters.set = this.sanitizeFilter(this.filters.set || '');
+    this.filters.type = this.sanitizeFilter(this.filters.type || '');
+    this.filters.subtype = this.sanitizeFilter(this.filters.subtype || '');
+    this.filters.supertype = this.sanitizeFilter(this.filters.supertype || '');
+    this.filters.rarity = this.sanitizeFilter(this.filters.rarity || '');
+    this.filters.legalities = this.sanitizeFilter(this.filters.legalities || '');
+
+
     this.currentPage = 1;
     this.pokemonService.searchCards(this.filters, this.searchTerm, this.currentPage, this.pageSize).subscribe(data => {
       this.pokemonCards = data.data;
@@ -119,7 +138,13 @@ export class BuildDeckComponent {
 
     const deckCardsJson = JSON.stringify(sanitizedDeckCards);
 
-    this.decks.createDeck(deckData, this.Deckimage, this.userId, deckCardsJson).subscribe(
+    this.authService.currentUser.subscribe(user => {
+      if (user && user.token) {
+       this.userid= this.decodeAndFetchTrainer(user.token);
+      }
+    });
+
+    this.decks.createDeck(deckData, this.Deckimage, this.userid, deckCardsJson).subscribe(
       (response) => {
         console.log('Deck creado exitosamente:', response);
         const deckId = response.id;
@@ -131,6 +156,17 @@ export class BuildDeckComponent {
     );
   }
 
+  decodeAndFetchTrainer(token: string) {
+
+      const decodedToken: any = jwtDecode(token);
+      const userId = decodedToken.userid;
+
+
+
+    return userId;
+
+  }
+
 
 
   resetDeckForm() {
@@ -140,6 +176,7 @@ export class BuildDeckComponent {
     this.Deckimage = null;
     this.deck = [];
     this.showDeckForm = false;
+    this.currentTotalQuantity=0;
   }
 
   onFileSelected(event: any): void {

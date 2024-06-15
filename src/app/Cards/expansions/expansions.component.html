@@ -1,3 +1,6 @@
+<div class="bodylog">
+  <div class="background-image">
+    <div class="gradient-overlay">
 <div class="container">
   <table class="table">
     <thead>
@@ -9,12 +12,16 @@
     </thead>
     <tbody>
       <tr *ngFor="let set of pokemonSets">
-        <a [routerLink]="['/Expansions', set.id]">
-        <td><img [src]="set.images.logo" alt="{{ set.name }}" class="product-set_image"></td>
-        </a>
-        <a [routerLink]="['/Expansions', set.id]">
-        <td>{{ set.name }}</td>
-        </a>
+        <td>
+          <a [routerLink]="['/Expansions', set.id]">
+            <img [src]="set.images.logo" alt="{{ set.name }}" class="product-set_image">
+          </a>
+        </td>
+        <td>
+          <a [routerLink]="['/Expansions', set.id]">
+            {{ set.name }}
+          </a>
+        </td>
         <td>{{ set.releaseDate }}</td>
       </tr>
     </tbody>
@@ -25,3 +32,7 @@
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
 </div>
+</div>
+</div>
+</div>
+

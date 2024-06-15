@@ -8,7 +8,7 @@ import { DecksService } from '../../decks.service';
 })
 export class AllDecksComponent {
 
-  deckss: any[] = [];
+  mazos: any[] = [];
   constructor(private decks:DecksService){}
 
   ngOnInit(): void {
@@ -18,8 +18,17 @@ export class AllDecksComponent {
 
   getdecks(): void {
     this.decks.veralldecks()
-      .subscribe((data: any) => {
-        this.deckss = data.data;
+      .subscribe((data) => {
+        this.mazos = data.map(deck => ({
+          id: deck.id,
+          name: deck.name,
+          description: deck.description,
+          creationDate: deck.creationDate,
+          type: deck.type,
+          trainerId: deck.trainerId,
+          image: deck.image ? `data:image/jpeg;base64,${deck.image}` : 'default-image-url',
+
+        }));
       });
   }
 }

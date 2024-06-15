@@ -1,74 +1,159 @@
-.container{
+/* Importar la fuente Montserrat desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.bodylog {
+  height: 1500px;
+  position: relative; /* Para que la posición de la capa sea relativa al div */
+  width: 100%;
+  z-index: 1;
+  margin-top: 0%;
+  align-self: center;
+  align-content: center;
+}
+
+.gradient-overlay {
+  position: absolute; /* Para que la capa se posicione encima de la imagen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(0, 0, 0, 0.604)); /* Definición del degradado */
+  z-index: 1; /* Asegura que la capa esté por encima de la imagen */
+}
+
+.background-image {
+  background-image: url('../../../assets/login.png');
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el div */
+  background-position: center; /* Centra la imagen */
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Asegura que la imagen esté detrás de la capa de degradado */
+}
+
+/* Estilo para el contenedor principal */
+.container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 20px;
   margin-top: 10%;
-
-  margin-bottom: 8%;
-
-	background-color: #fff;
-	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
-			0 10px 10px rgba(0,0,0,0.22);
-	position: relative;
-	overflow: hidden;
-	width: 950px;
-	max-width: 100%;
-  width: 1200px;
-	min-height: 480px;
+  background-color: #000000; /* Color de fondo gris claro */
+  margin-bottom: 5%;
+  border-radius: 2%;
+  font-family: 'Montserrat', sans-serif; /* Aplicar la fuente Montserrat */
+  text-decoration: none;
 }
 
-.container.search-header {
+a{
+  text-decoration: none;
+
+}
+
+/* Estilo para los enlaces debajo de las cartas */
+.product-card__name {
+  color: #ffffff; /* Cambiar el color del texto para que no parezca un hipervínculo */
+  text-decoration: none; /* Quitar la subrayado del enlace */
+}
+
+/* Estilos adicionales para los botones y otros elementos según sea necesario */
+.filters {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  text-align: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
-.container .search-header__input {
-  font-family: inherit;
-  font-size: 16px;
-  background-color: #0a0a0a;
-  border: solid 0.5px #525252;
-  color: #646464;
-  padding: 0.7rem 1rem;
-  border-radius: 25px;
-  width: 240px;
-  height: 48px;
-  transition: all ease-in-out 0.5s;
-  margin-right: -2rem;
-  opacity: 1;
-  text-align: center;
+.filters select {
+  height: 45px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.search-header__input:hover,
-.search-header__input:focus {
-  box-shadow: 0 0 1em #00000013;
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.search-header__input:focus {
-  outline: none;
-  background-color: #0a0a0aad;
-}
-
-.search-header__input::-webkit-input-placeholder {
-  font-weight: 100;
-  color: #3a3a3a;
-}
-
-.search-header__input:focus + .search-header__button {
-  background-color: transparent;
+.search-header__input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .search-header__button {
-  border: none;
-  background-color: transparent;
-  margin-top: 0.1em;
-}
-
-.search-header.search-header__button:hover {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.search-header.search-header__icon {
-  height: 1.3em;
-  width: 1.3em;
-  fill: #3a3a3a;
+.search-header__button svg {
+  display: block;
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Reduced gap between cards */
+  margin-left: 11.5%;
+  margin-top: 5%;
+}
+
+.col-md-2 {
+  flex: 0 0 16.6667%;
+  max-width: 16.6667%;
+  box-sizing: border-box;
+}
+
+.product-card {
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: scale(1.2); /* Enlarge the card on hover */
+}
+
+.product-card__image {
+  width: 100%;
+  height: auto;
+  max-width: 150px;
+  max-height: 210px;
+  object-fit: cover;
+  margin: auto;
+}
+
+.pagination-controls button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ffffff; /* Color de fondo blanco */
+  color: #000000; /* Color de texto negro */
+  border: 1px solid #ffffff; /* Borde blanco */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.pagination-controls button:hover {
+  background-color: rgb(237, 180, 67); /* Cambia a fondo negro al pasar el ratón */
+  color: #000000; /* Cambia a texto blanco al pasar el ratón */
+}
+
+.pagination-controls button[disabled] {
+  opacity: 0.6; /* Opacidad reducida para botones deshabilitados */
+  cursor: not-allowed; /* Cursor no permitido para botones deshabilitados */
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+

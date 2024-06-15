@@ -48,30 +48,31 @@
   <div class="row">
     <div class="col-md-2" *ngFor="let card of pokemonCards">
       <a class="product-card">
-
-          <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image" (click)="addToDeck(card)">
-
-
+        <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image" (click)="addToDeck(card)">
       </a>
     </div>
   </div>
 
-  <button (click)="loadMoreCards()" class="load-more-button">Cargar más cartas</button>
+  <div class="button-container">
+    <button (click)="loadMoreCards()" class="load-more-button">Cargar más cartas</button>
+  </div>
 
   <!-- Sección del Deck -->
-  <div class="row">
+  <div class="deck-container">
     <h2>Deck Actual Cartas = {{ this.currentTotalQuantity }}</h2>
-    <div  *ngFor="let card of deck" class="col-md-2">
-
-        <img [src]="card.images.small" alt="{{ card.name }}" />
-        <p>{{card.quantity}}</p>
-
+    <div class="row">
+      <div *ngFor="let card of deck" class="col-md-2">
+        <a class="product-card">
+          <img [src]="card.images.small" alt="{{ card.name }}" class="deck-card__image" />
+          <p>{{card.quantity}}</p>
+        </a>
+      </div>
     </div>
-    <button (click)="openDeckForm()">Guardar Deck</button>
+    <button (click)="openDeckForm()" class="save-deck-button">Guardar Deck</button>
   </div>
 
   <!-- Formulario para guardar el Deck -->
-  <div class="deck-form" *ngIf="showDeckForm">
+  <div class="deck-form-container" *ngIf="showDeckForm">
     <label for="deckName">Nombre del Deck:</label>
     <input id="deckName" [(ngModel)]="deckName" />
 
@@ -88,7 +89,6 @@
     <label>Imagen de Portada del Deck:</label>
     <input type="file" (change)="onFileSelected($event)" class="form-control">
 
-
-    <button (click)="saveDeck()">Guardar Deck</button>
+    <button (click)="saveDeck()" class="save-deck-button">Guardar Deck</button>
   </div>
 </div>
