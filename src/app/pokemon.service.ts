@@ -3,6 +3,40 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from './api';
 
+export interface PokemonCard {
+  id: string;
+
+  cardid:string;
+
+  name: string|undefined;
+  supertype:string;
+  quantity:number;
+  images: {
+    small: string;
+    large: string;
+  };
+}
+
+export interface PokemonSet {
+  id: string;
+  name: string;
+}
+
+export interface FilterOptions {
+  set: string;
+  type: string;
+  subtype: string;
+  supertype: string;
+  rarity: string;
+  legalities: string;
+}
+
+export interface CardSearchResponse {
+  data: PokemonCard[];
+  totalCount: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -132,7 +166,7 @@ searchCards(filters: any|null, searchTerm: string, page: number, pageSize: numbe
     query += `subtypes:${filters.subtype} `;
   }
   if (filters.supertype) {
-    query += `supertypes:${filters.supertype} `;
+    query += `supertype:${filters.supertype} `;
   }
   if (filters.rarity) {
     query += `rarity:${filters.rarity} `;

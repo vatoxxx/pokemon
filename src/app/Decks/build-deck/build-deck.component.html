@@ -1,0 +1,94 @@
+<div class="container">
+  <!-- Filtros -->
+  <div class="filters">
+    <select [(ngModel)]="filters.set" (change)="searchCards()">
+      <option value="">Todos los sets</option>
+      <option *ngFor="let set of pokemonSets" [value]="set.id">{{ set.name }}</option>
+    </select>
+
+    <select [(ngModel)]="filters.type" (change)="searchCards()">
+      <option value="">Todos los tipos</option>
+      <option *ngFor="let type of pokemonTypes" [value]="type">{{ type }}</option>
+    </select>
+
+    <select [(ngModel)]="filters.subtype" (change)="searchCards()">
+      <option value="">Todos los subtipos</option>
+      <option *ngFor="let subtype of pokemonSubtypes" [value]="subtype">{{ subtype }}</option>
+    </select>
+
+    <select [(ngModel)]="filters.supertype" (change)="searchCards()">
+      <option value="">Todos los supertipos</option>
+      <option *ngFor="let supertype of pokemonSupertypes" [value]="supertype">{{ supertype }}</option>
+    </select>
+
+    <select [(ngModel)]="filters.rarity" (change)="searchCards()">
+      <option value="">Todas las rarezas</option>
+      <option *ngFor="let rarity of pokemonRarities" [value]="rarity">{{ rarity }}</option>
+    </select>
+
+    <select [(ngModel)]="filters.legalities" (change)="searchCards()">
+      <option value="">Todas las legalidades</option>
+      <option value="unlimited">Unlimited</option>
+      <option value="expanded">Expanded</option>
+      <option value="standard">Standard</option>
+    </select>
+  </div>
+
+  <!-- Barra de búsqueda -->
+  <div class="search-header">
+    <input placeholder="Buscar por nombre" class="search-header__input" type="text" [(ngModel)]="searchTerm" (keyup)="searchCards()" />
+    <button class="search-header__button" (click)="searchCards()">
+      <svg fill="none" viewBox="0 0 18 18" height="18" width="18" class="search-header__icon">
+        <path fill="#3A3A3A" d="M7.132 0C3.197 0 0 3.124 0 6.97c0 3.844 3.197 6.969 7.132 6.969 1.557 0 2.995-.49 4.169-1.32L16.82 18 18 16.847l-5.454-5.342a6.846 6.846 0 0 0 1.718-4.536C14.264 3.124 11.067 0 7.132 0zm0 .82c3.48 0 6.293 2.748 6.293 6.15 0 3.4-2.813 6.149-6.293 6.149S.839 10.37.839 6.969C.839 3.568 3.651.82 7.132.82z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Resultados -->
+  <div class="row">
+    <div class="col-md-2" *ngFor="let card of pokemonCards">
+      <a class="product-card">
+
+          <img [src]="card.images.small" alt="{{ card.name }}" class="product-card__image" (click)="addToDeck(card)">
+
+
+      </a>
+    </div>
+  </div>
+
+  <button (click)="loadMoreCards()" class="load-more-button">Cargar más cartas</button>
+
+  <!-- Sección del Deck -->
+  <div class="row">
+    <h2>Deck Actual Cartas = {{ this.currentTotalQuantity }}</h2>
+    <div  *ngFor="let card of deck" class="col-md-2">
+
+        <img [src]="card.images.small" alt="{{ card.name }}" />
+        <p>{{card.quantity}}</p>
+
+    </div>
+    <button (click)="openDeckForm()">Guardar Deck</button>
+  </div>
+
+  <!-- Formulario para guardar el Deck -->
+  <div class="deck-form" *ngIf="showDeckForm">
+    <label for="deckName">Nombre del Deck:</label>
+    <input id="deckName" [(ngModel)]="deckName" />
+
+    <label for="deckType">Tipo de Deck:</label>
+    <select id="deckType" [(ngModel)]="deckType">
+      <option value="standard">Standard</option>
+      <option value="unlimited">Unlimited</option>
+      <option value="expanded">Expanded</option>
+    </select>
+
+    <label for="deckDescription">Descripción:</label>
+    <textarea id="deckDescription" [(ngModel)]="deckDescription"></textarea>
+
+    <label>Imagen de Portada del Deck:</label>
+    <input type="file" (change)="onFileSelected($event)" class="form-control">
+
+
+    <button (click)="saveDeck()">Guardar Deck</button>
+  </div>
+</div>

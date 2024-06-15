@@ -9,6 +9,9 @@ import { ExpansionsComponent } from './Cards/expansions/expansions.component';
 import { ExpansionDetailComponent } from './Cards/expansion-detail/expansion-detail.component';
 import { CardDetailComponent } from './Cards/card-detail/card-detail.component';
 import { CardsBannedComponent } from './Cards/cards-banned/cards-banned.component';
+import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
+import { BuildDeckComponent } from './Decks/build-deck/build-deck.component';
+import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
 
 const routes: Routes = [
 {path:'',component:BodyComponent},
@@ -19,7 +22,10 @@ const routes: Routes = [
 {path:'Expansions',component:ExpansionsComponent},
 { path: 'Expansions/:id', component: ExpansionDetailComponent },
 { path: 'Cards/:id', component: CardDetailComponent },
-{ path: 'Banned', component: CardsBannedComponent }
+{ path: 'Banned', component: CardsBannedComponent },
+{ path: 'Profile', component: UserProfileComponent },
+{ path: 'Build', component: BuildDeckComponent },
+{ path: 'User-Decks', component: UserDecksComponent }
 
 
 

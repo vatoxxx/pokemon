@@ -22,6 +22,7 @@ import { CardsBannedComponent } from './Cards/cards-banned/cards-banned.componen
 import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
 import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
 import { UserFavcardsComponent } from './Profile/user-favcards/user-favcards.component';
+import { BuildDeckComponent } from './Decks/build-deck/build-deck.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { UserFavcardsComponent } from './Profile/user-favcards/user-favcards.com
     CardsBannedComponent,
     UserProfileComponent,
     UserDecksComponent,
-    UserFavcardsComponent
+    UserFavcardsComponent,
+    BuildDeckComponent
   ],
   imports: [
     BrowserModule,

@@ -13,4 +13,16 @@ export class TrainerService {
   getTrainerByUserId(userId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/user/${userId}`);
   }
+
+  updateProfile(formData: FormData): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update`, formData);
+  }
+
+
+
+
+
+
+
+
 }
