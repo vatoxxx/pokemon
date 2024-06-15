@@ -21,12 +21,31 @@ export interface DeckCardDTO {
   quantity: number;
 }
 
+export interface CommentRequestDTO {
+  content: string;
+  deckId: number;
+  trainerId: number;
+  likes: number;
+  dislikes: number;
+}
+
+export interface CommentResponseDTO {
+  id: number;
+  content: string;
+  creationDateTime: string;
+  deckId: number;
+  trainerId: number;
+  likes: number;
+  dislikes: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class DecksService {
 
   private baseUrl = 'http://localhost:8081/api/decks';
+  private commentsUrl = 'http://localhost:8081/api/comments';
 
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -59,6 +78,44 @@ export class DecksService {
           throw error; // Lanzar el error para que lo maneje el componente que llama a este método
         })
       );
+  }
+
+
+  getCardsbydeck(deckid: number|null): Observable<DeckCardDTO[]> {
+    return this.http.get<DeckCardDTO[]>(`${this.baseUrl}/${deckid}/cards`)
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener los mazos:', error);
+          throw error; // Lanzar el error para que lo maneje el componente que llama a este método
+        })
+      );
+  }
+
+
+
+  getDeckbyid(deckid: number|null): Observable<DeckDTO> {
+    return this.http.get<DeckDTO>(`${this.baseUrl}/${deckid}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener los mazos:', error);
+          throw error; // Lanzar el error para que lo maneje el componente que llama a este método
+        })
+      );
+  }
+
+
+  getcommentsbydeckid(deckid: number|null): Observable<any> {
+    return this.http.get<any>(`${this.commentsUrl}/deck/${deckid}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener los mazos:', error);
+          throw error; // Lanzar el error para que lo maneje el componente que llama a este método
+        })
+      );
+  }
+
+  addComment(comment: CommentRequestDTO): Observable<CommentResponseDTO> {
+    return this.http.post<CommentResponseDTO>(`${this.commentsUrl}/add`, comment);
   }
 
 

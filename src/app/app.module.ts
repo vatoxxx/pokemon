@@ -23,6 +23,7 @@ import { UserProfileComponent } from './Profile/user-profile/user-profile.compon
 import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
 import { UserFavcardsComponent } from './Profile/user-favcards/user-favcards.component';
 import { BuildDeckComponent } from './Decks/build-deck/build-deck.component';
+import { DeckDetailComponent } from './Decks/deck-detail/deck-detail.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { BuildDeckComponent } from './Decks/build-deck/build-deck.component';
     UserProfileComponent,
     UserDecksComponent,
     UserFavcardsComponent,
-    BuildDeckComponent
+    BuildDeckComponent,
+    DeckDetailComponent
   ],
   imports: [
     BrowserModule,

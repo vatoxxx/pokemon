@@ -4,15 +4,7 @@
     <p>{{ mazo.description }}</p>
     <p>Fecha de creación: {{ mazo.creationDate }}</p>
     <p>Tipo: {{ mazo.type }}</p>
-    <p>Entrenador ID: {{ mazo.trainerId }}</p>
-    <img [src]="mazo.image"  alt="Imagen del Mazo" width="150" height="150">
+    <img [src]="mazo.image"  alt="Imagen del Mazo" width="150" height="150" [routerLink]="['/Decks', mazo.id]">
 
-    <h3>Cartas del Mazo</h3>
-    <ul>
-      <li *ngFor="let card of mazo.deckCards">
-        <p>Card ID: {{ card.cardid }}</p>
-        <p>Cantidad: {{ card.quantity }}</p>
-      </li>
-    </ul>
   </div>
 </div>

@@ -5,12 +5,12 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
-    if (this.authService.isAuthenticated()) {
+    if (!this.authService.isAuthenticated()) {
       // El usuario ya está autenticado, redirigir a otra ruta (por ejemplo, /Home)
       this.router.navigate(['/Home']);
       return false;

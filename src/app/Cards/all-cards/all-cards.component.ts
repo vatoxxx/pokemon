@@ -40,7 +40,20 @@ export class AllCardsComponent implements OnInit {
     this.pokemonService.getAllRarities().subscribe(data => this.pokemonRarities = data.data);
   }
 
+  sanitizeFilter(value: string): string {
+    return value.replace(/\s+/g, '*');
+  }
+
   searchCards(): void {
+
+    this.filters.set = this.sanitizeFilter(this.filters.set || '');
+    this.filters.type = this.sanitizeFilter(this.filters.type || '');
+    this.filters.subtype = this.sanitizeFilter(this.filters.subtype || '');
+    this.filters.supertype = this.sanitizeFilter(this.filters.supertype || '');
+    this.filters.rarity = this.sanitizeFilter(this.filters.rarity || '');
+    this.filters.legalities = this.sanitizeFilter(this.filters.legalities || '');
+
+
     this.pokemonService.searchCards(this.filters, this.searchTerm, this.currentPage, this.pageSize).subscribe(data => {
       this.pokemonCards = data.data;
       this.totalPages = Math.ceil(data.totalCount / this.pageSize);

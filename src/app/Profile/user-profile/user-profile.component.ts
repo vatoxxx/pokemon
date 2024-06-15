@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { TrainerService } from '../../trainer.service';
 import {jwtDecode} from 'jwt-decode';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,7 +13,7 @@ export class UserProfileComponent implements OnInit {
   currentUser: any = {};
   selectedFile: File | null = null;
 
-  constructor(private authService: AuthService, private trainerService: TrainerService) {}
+  constructor(private authService: AuthService, private trainerService: TrainerService,private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {

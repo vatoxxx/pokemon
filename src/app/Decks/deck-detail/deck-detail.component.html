@@ -1,0 +1,32 @@
+<div class="container">
+  <div *ngIf="deck">
+    <h1>{{ mazos.name }}</h1>
+    <img [src]="mazos.image" alt="{{ mazos.name }}">
+
+    <!-- Añadir más detalles según sea necesario -->
+
+    <div *ngFor="let card of deck">
+      <img *ngIf="card.image" [src]="card.image" alt="{{ card.cardid }}">
+      <p>Quantity: {{ card.quantity }}</p>
+    </div>
+
+    <!-- Espacio para agregar un nuevo comentario -->
+    <div class="comment-form">
+      <h3>Add a Comment</h3>
+      <textarea [(ngModel)]="newComment.content" placeholder="Write your comment here..."></textarea>
+      <button (click)="addComment()">Submit</button>
+    </div>
+
+    <!-- Espacio para mostrar los comentarios existentes -->
+    <div class="comments">
+      <h3>Comments</h3>
+      <div *ngFor="let comment of comments">
+        <p>{{ comment.content }}</p>
+        <div>
+          <button (click)="likeComment(comment)">👍 {{ comment.likes }}</button>
+          <button (click)="dislikeComment(comment)">👎 {{ comment.dislikes }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

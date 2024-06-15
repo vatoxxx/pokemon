@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeckDTO, DecksService } from '../../decks.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-decks',
@@ -9,11 +10,10 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class UserDecksComponent implements OnInit {
 
-  mazos: any = {};
+  mazos: any[] = []; // Inicializa como array
 
 
-
-  constructor(private deckService: DecksService, private sanitizer: DomSanitizer) { }
+  constructor(private route: ActivatedRoute,private deckService: DecksService) { }
 
   ngOnInit(): void {
     this.loadDecksByTrainer();
@@ -24,7 +24,6 @@ export class UserDecksComponent implements OnInit {
     this.deckService.getDecksByTrainer(trainerId).subscribe(
       (data) => {
 
-        console.log(data)
 
         this.mazos = data.map(deck => ({
           id: deck.id,
@@ -34,7 +33,7 @@ export class UserDecksComponent implements OnInit {
           type: deck.type,
           trainerId: deck.trainerId,
           image: deck.image ? `data:image/jpeg;base64,${deck.image}` : 'default-image-url',
-          deckCards: deck.deckCards // Asumiendo que deckCards ya está en el formato correcto
+
         }));
         }
       ,
