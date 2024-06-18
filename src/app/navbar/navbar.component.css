@@ -22,6 +22,55 @@ img{
   display: block;
 }
 
+
+/* Ajustes para el dropdown */
+.dropdown-menu {
+  background-color: #000000; /* Fondo del dropdown */
+  border: none; /* Elimina el borde del dropdown */
+}
+
+.dropdown-menu .dropdown-item {
+  color: whitesmoke; /* Color del texto normal */
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  color: rgb(237, 180, 67); /* Color del texto al hacer hover o focus */
+  background-color: rgba(0, 0, 0, 0.5); /* Color de fondo al hacer hover o focus */
+}
+
+.dropdown-menu .dropdown-item.active {
+  color: rgb(237, 180, 67); /* Color del texto cuando está activo */
+  background-color: rgba(0, 0, 0, 0.5); /* Color de fondo cuando está activo */
+}
+
+.dropdown-divider {
+  background-color: rgba(255, 255, 255, 0.1); /* Color de la línea divisoria */
+}
+
+.dropdown-menu-end {
+  right: 0; /* Alinea el dropdown a la derecha */
+}
+
+/* Ajustes para el enlace del dropdown cuando está activo o en hover */
+.dropdown-menu a.dropdown-item.active,
+.dropdown-menu a.dropdown-item:hover {
+  color: rgb(237, 180, 67) !important; /* Color del texto activo o en hover */
+  background-color: transparent !important; /* Fondo transparente */
+}
+
+/* Estilos para el icono dentro del dropdown */
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em; /* Ajuste de posición */
+  vertical-align: 0.255em; /* Alineación vertical */
+  content: ""; /* Contenido vacío */
+  border-top: 0.3em solid; /* Borde superior */
+  border-right: 0.3em solid transparent; /* Borde derecho transparente */
+  border-left: 0.3em solid transparent; /* Borde izquierdo transparente */
+}
+
+/* Cambios adicionales según sea necesario */
 .navbar.navbar-expand-lg.bg-body-tertiary {
   height: 85px;
 }
@@ -34,37 +83,27 @@ img{
 
 a.nav-link,
 a.dropdown-item {
-  color: whitesmoke;
-}
-
-a.dropdown-item.sub{
-  color: black;
+  color: whitesmoke; /* Color del texto */
 }
 
 a.nav-link:hover,
 a.nav-link:focus,
 a.nav-link.active,
 a.dropdown-item.active {
-  color: rgb(237, 180, 67) !important;
-}
-
-a.dropdown-item:hover,
-a.dropdown-item:focus {
-  color: rgb(237, 180, 67);
+  color: rgb(237, 180, 67) !important; /* Color del texto al hacer hover o activo */
 }
 
 .bg-body-tertiary {
-  --bs-bg-opacity: 1;
-  background-color: #000000 !important;
+  background-color: #000000 !important; /* Color de fondo del navbar */
 }
 
 a.navbar-brand {
-  color: whitesmoke;
-  margin-left: 30px;
+  color: whitesmoke; /* Color del texto del brand */
+  margin-left: 30px; /* Espaciado izquierdo */
 }
 
 .navbar-brand:hover {
-  color: whitesmoke;
+  color: whitesmoke; /* Color del texto del brand al hacer hover */
 }
 
 .box {
@@ -142,10 +181,11 @@ button {
 }
 
 .navbar-nav .nav-item {
-  margin-right: 20px; /* Adjust the value to increase/decrease the space */
-  font-size: 20px;
+  margin-right: 20px; /* Ajuste del margen derecho */
+  font-size: 20px; /* Tamaño de fuente */
 }
 
 .navbar-nav .nav-item:last-child {
-  margin-right: 80px; /* Remove margin from the last item */
+  margin-right: 80px; /* Elimina el margen del último item */
 }
+

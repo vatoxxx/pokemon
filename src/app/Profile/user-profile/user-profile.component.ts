@@ -13,6 +13,9 @@ export class UserProfileComponent implements OnInit {
   currentUser: any = {};
   selectedFile: File | null = null;
 
+  isLoading: boolean = true;  // Variable para el estado de carga
+  delayLoader: boolean = true; // Variable para el delay del loader
+
   constructor(private authService: AuthService, private trainerService: TrainerService,private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
@@ -38,6 +41,11 @@ export class UserProfileComponent implements OnInit {
             bio: trainer.biografia,
             email: trainer.user_email
           };
+
+          setTimeout(() => {
+            this.isLoading = false;  // Cambia el estado de carga a false cuando se obtiene la información
+          }, 450);
+          this.delayLoader = false; // Cambio el estado del delay del loader
         },
         error => {
           console.error('Error fetching trainer data', error);

@@ -33,6 +33,9 @@ export class BuildDeckComponent {
   deckDescription = '';
   Deckimage: File | null = null;
 
+  isLoading: boolean = true;  // Variable para el estado de carga
+  delayLoader: boolean = true; // Variable para el delay del loader
+
  userid:number=0;
 
   currentTotalQuantity: number = 0; // Define currentTotalQuantity as a property
@@ -72,6 +75,11 @@ export class BuildDeckComponent {
     this.pokemonService.searchCards(this.filters, this.searchTerm, this.currentPage, this.pageSize).subscribe(data => {
       this.pokemonCards = data.data;
       this.totalPages = Math.ceil(data.totalCount / this.pageSize);
+
+      setTimeout(() => {
+        this.isLoading = false;  // Cambia el estado de carga a false cuando se obtiene la información
+      }, 450);
+      this.delayLoader = false; // Cambio el estado del delay del loader
     });
   }
 
@@ -112,6 +120,8 @@ export class BuildDeckComponent {
       } else if (totalQuantity < 4) {
         // Si la carta no está en el deck, agregarla con cantidad 1
         this.deck.push({ ...card, quantity: 1 });
+      }else{
+        alert(`Ya hay 4 cartas con el nombre "${card.name}" en el deck.`);
       }
     } else {
       alert('El deck ya tiene 60 cartas.');

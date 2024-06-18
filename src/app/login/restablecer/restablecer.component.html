@@ -1,0 +1,12 @@
+<!-- reset-password.component.html -->
+ <div class="container">
+<div class="reset-password-container">
+  <h2>Restablecer Contraseña</h2>
+  <form (ngSubmit)="resetPassword()">
+    <input type="password" placeholder="Nueva Contraseña" [(ngModel)]="newPassword" name="newPassword" required>
+    <input type="password" placeholder="Confirmar Nueva Contraseña" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+    <button type="submit">Restablecer Contraseña</button>
+  </form>
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>
+</div>

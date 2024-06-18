@@ -8,7 +8,9 @@ const ALLOWED_URLS = [
   'http://localhost:8081/api/decks/byTrainer/',
   'http://localhost:8081/api/decks/',
   'http://localhost:8081/api/comments/deck/',
-  'http://localhost:8081/api/comments/add'
+  'http://localhost:8081/api/comments/add',
+  'http://localhost:8081/api/trainers/update',
+  'http://localhost:8081/api/decks/'
 
 ];
 

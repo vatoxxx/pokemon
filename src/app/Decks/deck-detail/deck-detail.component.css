@@ -1,16 +1,129 @@
-.container{
+.container {
   margin-top: 10%;
-
   margin-bottom: 8%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  position: relative;
+  overflow: hidden;
+  width: 950px;
+  max-width: 100%;
+  min-height: 480px;
+  padding: 20px;
+}
 
-	background-color: #fff;
-	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
-			0 10px 10px rgba(0,0,0,0.22);
-	position: relative;
-	overflow: hidden;
-	width: 950px;
-	max-width: 100%;
-  width: 1200px;
-	min-height: 480px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header p {
+  margin: 5px 0;
+}
+
+.trainer-info {
+  display: flex;
+  align-items: center;
+}
+
+.trainer-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.deck-image {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.deck-image img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.description {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.card-list {
+  margin-bottom: 20px;
+}
+
+.card-list h2 {
+  margin-top: 0;
+}
+
+.card-list .card {
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+}
+
+.card-list img {
+  width: 100px;
+  height: 140px;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.comment-form, .comments {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.comment-form h3, .comments h3 {
+  margin-top: 0;
+}
+
+.comment-form textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.comment-form button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+
+.comments div {
+  margin-bottom: 20px;
+}
+
+.comments p {
+  margin: 5px 0;
+}
+
+.comments div button {
+  margin-right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.comments div button:hover {
+  text-decoration: underline;
 }

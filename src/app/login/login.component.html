@@ -6,41 +6,58 @@
           <form (ngSubmit)="register()">
             <h1>Crea Una Cuenta</h1>
             <br>
-
             <input type="text" id="username" [(ngModel)]="username" name="username" placeholder="Ash Ketchum" />
             <input type="email" id="email" [(ngModel)]="email" name="email" required>
             <input type="password" id="contraseña" [(ngModel)]="password" name="contraseña" required>
             <br>
-            <button type="submit">Registrate</button>
+            <button type="submit">Regístrate</button>
             <div *ngIf="error">{{ error }}</div>
           </form>
         </div>
         <div class="form-container sign-in-container">
           <form (ngSubmit)="login()">
-            <h1>Inicia Sesion</h1>
+            <h1>Inicia Sesión</h1>
             <br>
-
-            <input type="text" id="username" [(ngModel)]="email" name="username" required>
+            <input type="text" id="email" [(ngModel)]="email" name="email" required>
             <input type="password" id="password" [(ngModel)]="password" name="password" required>
-            <a href="#">Olvidaste tu Contraseña?</a>
-            <button type="submit">Inicia sesion</button>
+            <a (click)="openForgotPassword()">¿Olvidaste tu contraseña?</a>
+            <button type="submit">Inicia sesión</button>
           </form>
         </div>
         <div class="overlay-container">
           <div class="overlay">
             <div class="overlay-panel overlay-left">
-              <h1>Bienvenido de Vuelta Entrenador!</h1>
-              <p>Inicia Sesion con tu Informacion Personal</p>
-              <button class="ghost" id="signIn">Inicia Sesion</button>
+              <h1>¡Bienvenido de Vuelta Entrenador!</h1>
+              <p>Inicia sesión con tu información personal</p>
+              <button class="ghost" id="signIn">Inicia Sesión</button>
             </div>
             <div class="overlay-panel overlay-right">
-              <h1>Hola, Entrenador Pokemon!</h1>
-              <p><!-- Enter your personal details and start journey with us --> Ingresa tu Informacion e Inicia Tu Aventura con Nosotros</p>
-              <button class="ghost" id="signUp">Registrate</button>
+              <h1>¡Hola, Entrenador Pokémon!</h1>
+              <p>Ingresa tu información e inicia tu aventura con nosotros</p>
+              <button class="ghost" id="signUp">Regístrate</button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="overlay-background" id="overlayBackground" (click)="closeForgotPassword()"></div>
+
+<div class="form-containero" id="forgotPasswordForm">
+  <div class="logo-containero">
+    Olvidaste tu Contraseña
+  </div>
+  <form class="formo" (ngSubmit)="sendForgotPasswordEmail()">
+    <div class="form-groupo">
+      <label for="email">Email</label>
+      <input type="text" id="forgotEmail" name="email" [(ngModel)]="forgotEmail" placeholder="Ingresa tu email" required>
+    </div>
+    <button class="form-submit-btno" type="submit">Enviar Email</button>
+  </form>
+  <p class="signup-linko">
+    No tienes una Cuenta?
+    <a class="signup-linko linko" (click)="openSignUp()">Registrate ahora</a>
+  </p>
 </div>

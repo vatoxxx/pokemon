@@ -63,4 +63,18 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+
+
+  sendPasswordResetEmail(email: string): Observable<any> {
+    const url = `${this.baseUrl}/password-reset`;
+    return this.http.post(url, { email: email });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const url = `${this.baseUrl}/password-reset/confirm`;
+    return this.http.post(url, { token: token, newPassword: newPassword });
+  }
+
+
+
 }

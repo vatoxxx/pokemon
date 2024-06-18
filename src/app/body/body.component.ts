@@ -11,18 +11,18 @@ export class BodyComponent {
   slides = [
     {
       image: 'assets/temporalforces.jpg',
-      captionTitle: 'Bienvenido a Nuestra Página',
-      captionText: 'Descubre nuestros productos y servicios'
+      captionTitle: 'Bienvenido a PokePlanner',
+      captionText: 'Descubre nuestra base de datos de cartas y expansiones de Pokémon'
     },
     {
       image: 'assets/paldeanfates.jpg',
-      captionTitle: 'Explora Nuestro Catálogo',
-      captionText: 'Encuentra lo que buscas'
+      captionTitle: 'Explora Nuestro Catálogo de Mazos',
+      captionText: 'Encuentra y crea los mejores mazos'
     },
     {
       image: 'assets/paradoxrift.jpg',
-      captionTitle: 'Ofertas Exclusivas',
-      captionText: 'Aprovecha nuestras promociones'
+      captionTitle: 'Construye y Comparte',
+      captionText: 'Crea y comparte tus mazos con la comunidad'
     }
   ];
 

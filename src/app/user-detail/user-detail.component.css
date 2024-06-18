@@ -1,0 +1,47 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  margin-top: 10%;
+  width: 100%;
+}
+
+.user-detail {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.user-detail-header {
+  display: flex;
+  align-items: center;
+}
+
+.user-detail-header img {
+  margin-right: 20px;
+}
+
+.user-info h2 {
+  margin-bottom: 10px;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

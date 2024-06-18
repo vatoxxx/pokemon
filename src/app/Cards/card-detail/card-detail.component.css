@@ -1,16 +1,240 @@
+/* styles.css o card-detail.component.css */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #fff;
+  background-color: #222;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  margin-top: 8%;
+  border: solid 4px rgba(231, 231, 231, 0);
+  border-top: solid 5px rgb(241, 68, 68);
+  border-radius: 50%;
+  transition: all 0.5s;
+  animation: rotation_51512 1.2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+@keyframes rotation_51512 {
+  70% {
+    box-shadow: 0px 0px 10px 50px rgba(241, 57, 57, 0.526);
+  }
+
+  90% {
+    box-shadow: 0px 0px 10px 50px rgba(241, 57, 57, 0.04);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 .container{
   margin-top: 10%;
+  font-family: mont;
+  color: white;
+  font-family: 'Montserrat', sans-serif; /* Aplicar la fuente Montserrat */
+  margin-bottom: 5%;
 
-  margin-bottom: 8%;
-
-	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
 			0 10px 10px rgba(0,0,0,0.22);
-	position: relative;
+	position:static;
 	overflow: hidden;
 	width: 950px;
 	max-width: 100%;
   width: 1200px;
 	min-height: 480px;
 }
+
+.card-area {
+  display: flex;
+  gap: 20px;
+}
+
+.column1 {
+  flex: 1;
+}
+
+.column2 {
+  flex: 2;
+}
+
+.legal {
+  color: green;
+  font-weight: bold;
+}
+
+.banned {
+  color: red;
+  font-weight: bold;
+}
+
+.card-image figure {
+  margin: 0;
+  padding: 0;
+  padding: 10px;
+
+}
+
+.card-image img {
+  max-width: 100%;
+  height: auto;
+  margin-left: 15%;
+  margin-top: 5%;
+}
+
+.card-name h1 {
+  margin: 0;
+  font-size: 4em;
+  color: #ffcc00;
+}
+
+.text-muted {
+
+font-size: 20px;
+color: white !important;
+
+}
+
+.text-muted a {
+  font-size: 16px;
+  overflow-wrap: normal;
+  color: white;
+}
+
+.resources-bar {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.resources-bar i {
+  margin-right: 5px;
+}
+
+.resources-bar-links {
+  display: flex;
+  gap: 10px;
+}
+
+.resources-bar-links a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+
+.card-data-info {
+  list-style: none;
+  padding: 0;
+}
+
+.card-data-info li {
+  margin: 10px 0;
+}
+
+.card-data-header {
+  font-weight: bold;
+}
+
+.card-data-subheader {
+  margin-left: 10px;
+}
+
+.card-text {
+
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.card-text span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+hr {
+  border-color: #444;
+}
+
+.attacks .damage{
+    font-size: 50px;
+}
+
+.legalities {
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.legalities span {
+  text-align: center;
+  margin: 0 5px;
+}
+
+.attacks {
+
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.ifattacks h3{
+
+  font-size: 40px;
+
+color:#ffcc00;
+}
+
+.attacks-text-damage {
+  display: flex;
+  font-size: 30px;
+  margin-left: auto;
+}
+
+.attacks .damage {
+  font-size: 30px;
+  margin-left: auto;
+}
+
+
+.type{
+  display: flex;
+  align-items: center;
+}
+
+
+.font-weight-bold{
+  font-size: 40px;
+  color: #ffcc00;
+}
+
+
+
+.attack-text-image{
+  display: flex;
+  align-items: center;
+}
+
+.attack-image-energy{
+display: flex;
+gap: 5px;
+padding: 5px;
+
+}
+
+

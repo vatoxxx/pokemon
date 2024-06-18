@@ -1,12 +1,173 @@
-<div class="container">
-  <div *ngIf="card">
-    <h1>{{ card.name }}</h1>
-    <img [src]="card.data.images.small" alt="{{ card.data.name }}">
-    <p>Set: {{ card.data.set.name }}</p>
-    <p>Release Date: {{ card.data.set.releaseDate }}</p>
-    <p>Type: {{ card.data.types.join(', ') }}</p>
-    <p>Rarity: {{ card.data.rarity }}</p>
-    <p>{{ card.data.flavorText }}</p>
-    <!-- Añadir más detalles según sea necesario -->
+
+<div class="loading" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
+
+
+<div class="container" *ngIf="!isLoading && card">
+  <div class="card-area" style="min-height: 410px;">
+    <div class="column1">
+      <div class="card-image">
+        <figure>
+          <img [src]="card.data.images.small" alt="{{ card.data.name }}" loading="lazy">
+          <figcaption>
+            <div class="format-row-grid">
+              <div *ngIf="card.data.legalities" class="legalities">
+                <!-- Legalidad Unlimited -->
+                <span *ngIf="card.data.legalities.unlimited"
+                      [ngClass]="{'legal': card.data.legalities.unlimited === 'Legal', 'banned': card.data.legalities.unlimited === 'Banned'}">
+                  Unlimited
+                </span>
+                <!-- Legalidad Expanded -->
+                <span *ngIf="card.data.legalities.expanded"
+                      [ngClass]="{'legal': card.data.legalities.expanded === 'Legal', 'banned': card.data.legalities.expanded === 'Banned'}">
+                  Expanded
+                </span>
+                <!-- Legalidad Standard -->
+                <span *ngIf="card.data.legalities.standard"
+                      [ngClass]="{'legal': card.data.legalities.standard === 'Legal', 'banned': card.data.legalities.standard === 'Banned'}">
+                  Standard
+                </span>
+              </div>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="column2">
+      <div class="card-name">
+        <h1>
+          {{ card.data.name }}
+          <span class="text-muted">
+
+            <a>{{ card.data.set.name }}</a> / <a>{{ card.data.id }}</a>
+          </span>
+        </h1>
+      </div>
+      <div class="resources-bar">
+        <span><i class="fa-solid fa-hashtag"></i> Card Number: {{ card.data.number }}</span>
+        <span><i class="fa-solid fa-earth-americas"></i> Pokédex Number: {{ card.data.dexId }}</span>
+      </div>
+      <div class="resources-bar resources-bar-links">
+        <span><a href="{{ card.data.tcgplayer.url }}" target="_blank" rel="noopener sponsored"><i class="fa-solid fa-arrow-up-right-from-square"></i> TCGplayer</a></span>
+        <span><a href="{{ card.data.cardmarket.url }}" target="_blank" rel="noopener sponsored"><i class="fa-solid fa-arrow-up-right-from-square"></i> Cardmarket</a></span>
+        <span><a href="{{ card.data.images.small }}" target="_blank" rel="noopener sponsored"><i class="fa-solid fa-arrow-up-right-from-square"></i> Image (.png)</a></span>
+        <span><a href="{{ card.data.images.large }}" target="_blank" rel="noopener sponsored"><i class="fa-solid fa-arrow-up-right-from-square"></i> Image High Res (.jpg)</a></span>
+      </div>
+      <ul class="card-data-info">
+        <li>
+          <span class="card-data-header">Type</span>
+          <span class="card-data-cost card-data-subheader">
+            <i class="fa-solid fa-hammer-war"></i> <a>{{ card.data.supertype }}</a>
+          </span>
+        </li>
+        <li>
+          <span class="card-data-header">Subtype</span>
+          <span class="card-data-cost card-data-subheader">
+            <i class="fa-solid fa-book"></i> <a>{{ card.data.subtypes ? card.data.subtypes.join(', ') : '' }}</a>
+          </span>
+        </li>
+        <li>
+          <span class="card-data-header">Artist</span>
+          <span class="card-data-cost card-data-subheader">
+            <i class="fa-solid fa-palette"></i> <a>{{ card.data.artist }}</a>
+          </span>
+        </li>
+        <li>
+          <span class="card-data-header">Release Date</span>
+          <span class="card-data-cost card-data-subheader">
+            <i class="fa-solid fa-calendar"></i> <a>{{ card.data.set.releaseDate }}</a>
+          </span>
+        </li>
+      </ul>
+
+      <div *ngIf="card.data.supertype === 'Pokémon'">
+        <ul class="card-data-info">
+          <li>
+            <span class="card-data-header">HP</span>
+            <span class="card-data-cost card-data-subheader">{{ card.data.hp }}</span>
+          </li>
+          <li>
+            <div class="type">
+              <span class="card-data-header">Type</span>
+              <div class="card-text" *ngIf="card.data.types && card.data.types.length">
+                <span *ngFor="let type of card.data.types">
+
+                  {{type}}
+                  <img [src]="'https://images.pokemoncard.io/images/assets/types/' + type + '.webp'" class="typeicon" alt="{{ type }}">
+
+                </span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <span class="card-data-header">Weakness</span>
+            <span class="card-data-cost card-data-subheader">
+              <ng-container *ngFor="let weakness of card.data.weaknesses">
+                <img [src]="'https://images.pokemoncard.io/images/assets/types/' + weakness.type + '.webp'" class="typeicon" alt="{{ weakness.type }}">
+                {{ weakness.value }}
+              </ng-container>
+            </span>
+          </li>
+          <li>
+            <span class="card-data-header">Resistance</span>
+            <span class="card-data-cost card-data-subheader">
+              <ng-container *ngFor="let resistance of card.data.resistances">
+                <img [src]="'https://images.pokemoncard.io/images/assets/types/' + resistance.type + '.webp'" class="typeicon" alt="{{ resistance.type }}">
+                {{ resistance.value }}
+              </ng-container>
+            </span>
+          </li>
+          <li>
+            <span class="card-data-header">Retreat Cost</span>
+            <span class="card-data-cost card-data-subheader">
+              <ng-container *ngFor="let cost of card.data.retreatCost">
+                <img [src]="'https://images.pokemoncard.io/images/assets/types/' + cost + '.webp'" class="typeicon" alt="{{ cost }}">
+              </ng-container>
+            </span>
+          </li>
+        </ul>
+        <div *ngIf="card.data.attacks" class="ifattacks">
+          <h3>Attacks</h3>
+          <div *ngFor="let attack of card.data.attacks" class="attacks">
+            <div class="attack-text-image">
+            <h4>{{ attack.name }}</h4>
+            <div class="attack-image-energy">
+              <ng-container *ngFor="let cost of attack.cost" class="attacks-image">
+                <img [src]="'https://images.pokemoncard.io/images/assets/types/' + cost + '.webp'" class="typeicon" alt="{{ cost }}">
+              </ng-container>
+              <span >{{ attack.convertedEnergyCost }}</span>
+            </div>
+          </div>
+            <div class="attacks-text-damage">
+            <p>{{ attack.text }}</p>
+            <span class="damage">{{ attack.damage }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h4 *ngIf="card.data.abilities && card.data.abilities.length"><span class="font-weight-bold">Abilities</span></h4>
+      <ul *ngIf="card.data.abilities && card.data.abilities.length">
+        <li *ngFor="let ability of card.data.abilities">
+          <span class="card-data-header">{{ ability.name }}</span>
+          <span class="card-data-cost card-data-subheader">{{ ability.text }}</span>
+        </li>
+      </ul>
+
+      <h4 *ngIf="card.data.rules && card.data.rules.length"><span class="font-weight-bold">Card Rule</span></h4>
+      <div class="card-text" *ngIf="card.data.rules && card.data.rules.length">
+        <span *ngFor="let rule of card.data.rules">
+          <br>
+          {{ rule }}
+          <br>
+        </span>
+      </div>
+      <hr>
+    </div>
   </div>
 </div>
+
+
+

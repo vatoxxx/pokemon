@@ -24,6 +24,9 @@ import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
 import { UserFavcardsComponent } from './Profile/user-favcards/user-favcards.component';
 import { BuildDeckComponent } from './Decks/build-deck/build-deck.component';
 import { DeckDetailComponent } from './Decks/deck-detail/deck-detail.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { RestablecerComponent } from './login/restablecer/restablecer.component';
 
 
 @NgModule({
@@ -44,14 +47,17 @@ import { DeckDetailComponent } from './Decks/deck-detail/deck-detail.component';
     UserDecksComponent,
     UserFavcardsComponent,
     BuildDeckComponent,
-    DeckDetailComponent
+    DeckDetailComponent,
+    UserDetailComponent,
+    RestablecerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     CarouselModule.forRoot(),
-    FormsModule
+    FormsModule,
+    InputTextareaModule
   ],
   providers: [ AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],

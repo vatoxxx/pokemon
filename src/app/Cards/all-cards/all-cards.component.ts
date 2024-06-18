@@ -9,6 +9,8 @@ import { PokemonService } from '../../pokemon.service';
 export class AllCardsComponent implements OnInit {
 
 
+  isLoading: boolean = true;  // Variable para el estado de carga
+  delayLoader: boolean = true; // Variable para el delay del loader
 
   pokemonSets: any[] = [];
   pokemonCards: any[] = [];
@@ -37,7 +39,8 @@ export class AllCardsComponent implements OnInit {
     this.pokemonService.getAllTypes().subscribe(data => this.pokemonTypes = data.data);
     this.pokemonService.getAllSubtypes().subscribe(data => this.pokemonSubtypes = data.data);
     this.pokemonService.getAllSupertypes().subscribe(data => this.pokemonSupertypes = data.data);
-    this.pokemonService.getAllRarities().subscribe(data => this.pokemonRarities = data.data);
+    this.pokemonService.getAllRarities().subscribe(data => this.pokemonRarities = data.data) ;
+
   }
 
   sanitizeFilter(value: string): string {
@@ -57,6 +60,11 @@ export class AllCardsComponent implements OnInit {
     this.pokemonService.searchCards(this.filters, this.searchTerm, this.currentPage, this.pageSize).subscribe(data => {
       this.pokemonCards = data.data;
       this.totalPages = Math.ceil(data.totalCount / this.pageSize);
+      setTimeout(() => {
+        this.isLoading = false;  // Cambia el estado de carga a false cuando se obtiene la información
+      }, 150);
+      this.delayLoader = false; // Cambio el estado del delay del loader
+
     });
   }
 

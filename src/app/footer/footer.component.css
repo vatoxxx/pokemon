@@ -1,17 +1,19 @@
-
-
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-
 
 .content {
   flex: 1;
   font-family: 'Montserrat', sans-serif;
 }
 
+.list-unstyled .li{
+  text-justify: left;
+}
+
 footer {
   background-color: rgb(235, 233, 233);
   color: #333;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
 }
 
 footer a {
@@ -29,6 +31,12 @@ footer h5 {
 
 footer p, footer li {
   font-weight: 400;
+  font-size: 1rem; /* Decent font size for general content */
+}
+
+footer .footer-note {
+  font-size: 0.8rem; /* Smaller font size for additional information */
+  color: #aaa; /* Light gray color */
 }
 
 .py-4 {

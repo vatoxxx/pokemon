@@ -1,10 +1,31 @@
-<div class="container">
-  <div *ngFor="let mazo of mazos">
-    <h2>{{ mazo.name }}</h2>
-    <p>{{ mazo.description }}</p>
-    <p>Fecha de creación: {{ mazo.creationDate }}</p>
-    <p>Tipo: {{ mazo.type }}</p>
-    <img [src]="mazo.image"  alt="Imagen del Mazo" width="150" height="150" [routerLink]="['/Decks', mazo.id]">
+<div *ngIf="isLoading || delayLoader" class="loading">
+  <div class="spinner"></div>
+  <p>Cargando...</p>
+</div>
 
+
+<div class="container" *ngIf="!isLoading && mazos && !delayLoader">
+  <div class="grid">
+    <div *ngFor="let mazo of paginatedDecks; let i = index" class="card">
+      <div class="card__img">
+        <img [src]="mazo.image" alt="Imagen del Mazo" [routerLink]="['/Decks', mazo.id]">
+      </div>
+      <div class="card__info">
+        <div class="card__header">
+          <span class="card__type">{{ mazo.type }}</span>
+          <span class="card__price">{{ mazo.price | currency }}</span>
+        </div>
+        <h3 class="card__title">{{ mazo.name }}</h3>
+        <p class="card__description">{{ mazo.description }}</p>
+        <div class="card__footer">
+          <span class="card__author">{{ mazo.author }}</span>
+          <span class="card__time">{{ mazo.time }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
 </div>

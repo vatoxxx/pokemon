@@ -15,6 +15,9 @@ import { UserDecksComponent } from './Profile/user-decks/user-decks.component';
 import { DeckDetailComponent } from './Decks/deck-detail/deck-detail.component';
 import { LoginGuard } from './LoginGuard';
 import { StandardComponent } from './Decks/standard/standard.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserFavcardsComponent } from './Profile/user-favcards/user-favcards.component';
+import { RestablecerComponent } from './login/restablecer/restablecer.component';
 
 const routes: Routes = [
 {path:'',component:BodyComponent},
@@ -31,7 +34,11 @@ const routes: Routes = [
 { path: 'User-Decks', component: UserDecksComponent,canActivate: [LoginGuard] },
 { path: 'Decks/:id', component: DeckDetailComponent },
 { path: 'Decks/Type/:tipo', component: StandardComponent },
-{ path: '**', redirectTo: '/Home' }
+{ path: 'User-detail/:username', component: UserDetailComponent },
+{ path: 'Favorite-cards', component: UserFavcardsComponent },
+{ path: 'reset-password', component: RestablecerComponent },
+{ path: '**', redirectTo: '/Home' },
+
 
 
 

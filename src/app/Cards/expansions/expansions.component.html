@@ -1,7 +1,9 @@
-<div class="bodylog">
-  <div class="background-image">
-    <div class="gradient-overlay">
-<div class="container">
+<div class="loading" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div class="container" *ngIf="!isLoading">
   <table class="table">
     <thead>
       <tr>
@@ -32,7 +34,5 @@
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
 </div>
-</div>
-</div>
-</div>
+
 

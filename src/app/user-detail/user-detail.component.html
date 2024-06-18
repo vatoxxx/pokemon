@@ -1,0 +1,18 @@
+<div class="container">
+
+<div *ngIf="trainerDetails" class="user-detail">
+  <div class="user-detail-header">
+    <img *ngIf="trainerDetails.image" [src]="trainerDetails.image" class="trainer-avatar rounded-circle" height="100px" alt="Imagen del Entrenador">
+    <div class="user-info">
+      <h2>{{ trainerDetails.username }}</h2>
+      <p>{{ trainerDetails.biografia }}</p>
+      <p>Número de mazos creados: {{ trainerDetails.numberOfDecks }}</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="!trainerDetails" class="loading">
+  <div class="spinner"></div>
+  <p>Cargando detalles del entrenador...</p>
+</div>

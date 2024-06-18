@@ -1,4 +1,9 @@
-<div class="container">
+<div *ngIf="isLoading || delayLoader" class="loading">
+  <div class="spinner"></div>
+  <p>Cargando...</p>
+</div>
+
+<div class="container" *ngIf="!isLoading && !delayLoader">
   <!-- Filtros -->
   <div class="filters">
     <select [(ngModel)]="filters.set" (change)="searchCards()">
@@ -89,6 +94,6 @@
     <label>Imagen de Portada del Deck:</label>
     <input type="file" (change)="onFileSelected($event)" class="form-control">
 
-    <button (click)="saveDeck()" class="save-deck-button">Guardar Deck</button>
+    <button (click)="saveDeck()" routerLink="/User-Decks" class="save-deck-button">Guardar Deck</button>
   </div>
 </div>

@@ -1,19 +1,27 @@
-<div class="container">
-  <h1>Tu Perfil</h1>
+<div *ngIf="isLoading || delayLoader" class="loading">
+  <div class="spinner"></div>
+  <p>Cargando...</p>
+</div>
+
+<div class="container"  *ngIf="!isLoading && !delayLoader">
+  <h1 class="profile-title">Tu Perfil</h1>
   <div *ngIf="currentUser">
     <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
       <div class="profile-info">
         <div class="profile-picture">
-          <img [src]="currentUser.photo" alt="Profile Picture" width="80" height="80">
-          <input type="file" (change)="onFileSelected($event)" class="form-control">
+          <img [src]="currentUser.photo" alt="Profile Picture">
         </div>
-        <div class="username">
-          <p>{{ currentUser.username }}</p>
-
+        <div class="user-details">
+          <p class="username">{{ currentUser.username }}</p>
+          <p class="email">{{ currentUser.email }}</p>
         </div>
-        <p>{{ currentUser.email }}</p>
       </div>
+      <label class="file-input-label">
+        Cambiar Foto
+        <input type="file" (change)="onFileSelected($event)" class="file-input">
+      </label>
       <div class="bio">
+
         <label for="bio">Biografía</label>
         <textarea [(ngModel)]="currentUser.bio" name="bio" id="bio" class="form-control" rows="3"></textarea>
       </div>

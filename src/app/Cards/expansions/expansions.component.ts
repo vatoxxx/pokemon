@@ -13,6 +13,8 @@ export class ExpansionsComponent {
   pageSize: number = 20;
   totalPages: number = 1;
 
+  isLoading: boolean = true;  // Variable para el estado de carga
+
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit(): void {
@@ -23,6 +25,7 @@ export class ExpansionsComponent {
     this.pokemonService.getSetsOrderedByReleaseDate(this.currentPage, this.pageSize).subscribe(data => {
       this.pokemonSets = data.data;
       this.totalPages = Math.ceil(data.totalCount / this.pageSize); // Calcula el número total de páginas
+      this.isLoading=false;
     });
   }
 

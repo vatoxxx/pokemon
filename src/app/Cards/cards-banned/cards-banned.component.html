@@ -1,8 +1,9 @@
-<div class="bodylog">
-  <div class="background-image">
-    <div class="gradient-overlay">
+<div class="loading" *ngIf="isLoading || delayLoader">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
 
-<div class="container">
+<div class="container" *ngIf="!isLoading && !delayLoader">
   <h1>Cartas Baneadas</h1>
   <p>Esta es la lista de cartas restringidas para el Juego de Cartas Coleccionables Pokémon. Toda la información sobre la lista de restringidos puede ser encontrada <a class="link" href="https://www.pokemon.com/us/play-pokemon/about/pokemon-tcg-banned-card-list">aquí</a>.</p>
   <p>La lista de cartas restringidas es únicamente para torneos oficialmente sancionados.</p>
@@ -49,7 +50,7 @@
       </a>
     </div>
   </div>
-  <h1>Ulimited</h1>
+  <h1>Unlimited</h1>
   <div class="row">
     <div class="col-md-3" *ngFor="let card of pokemonCardsU">
       <a class="product-card">
@@ -63,6 +64,4 @@
     </div>
   </div>
 </div>
-</div>
-</div>
-</div>
+
