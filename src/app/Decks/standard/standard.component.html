@@ -6,6 +6,7 @@
 
 
 <div class="container" *ngIf="!isLoading && mazos && !delayLoader">
+  <h1>Mazos {{tipo}}</h1>
   <div *ngIf="mazos.length > 0; else noDecks" class="grid">
     <div *ngFor="let mazo of paginatedDecks; let i = index" class="card">
       <div class="card__img">
@@ -19,7 +20,10 @@
         <h3 class="card__title">{{ mazo.name }}</h3>
         <p class="card__description">{{ mazo.description }}</p>
         <div class="card__footer">
-          <span class="card__author">{{ mazo.author }}</span>
+          <div class="card__author-info">
+            <img *ngIf="mazo.trainer && mazo.trainer.image" [src]="mazo.trainer.image" class="trainer-avatar rounded-circle" height="30px" width="35px" alt="Imagen del Entrenador">
+            <a class="card__author" *ngIf="mazo.trainer" [routerLink]="['/User-detail', mazo.trainer.username]">{{ mazo.trainer.username }}</a>
+          </div>
           <span class="card__time">{{ mazo.time }}</span>
         </div>
       </div>

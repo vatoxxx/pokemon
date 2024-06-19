@@ -1,10 +1,64 @@
-<div class="container">
+<div class="loading" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div class="container" *ngIf="!isLoading">
   <div *ngIf="set">
-    <h1>{{ set.data.name }}</h1>
-     <img [src]="set.data.images.logo" alt="{{ set.name }}">
-    <p>Release Date: {{ set.data.releaseDate }}</p>
-    <p>Total Cards: {{ set.data.printedTotal }}</p>
-    <p>Series: {{ set.data.series }}</p>
-    <!-- Añadir más detalles según sea necesario -->
+    <div class="expansion-area" style="min-height: 410px;">
+      <div class="column1">
+        <div class="expansion-image">
+          <div class="image">
+            <figure>
+              <img [src]="set.data.images.logo" alt="{{ set.data.name }}" loading="lazy" class="logo-image">
+            </figure>
+          </div>
+          <div class="legalities">
+            <!-- Legalidad Unlimited -->
+            <span *ngIf="set.data.legalities.unlimited"
+                  [ngClass]="{'legal': set.data.legalities.unlimited === 'Legal', 'banned': set.data.legalities.unlimited === 'Banned'}">
+              Unlimited
+            </span>
+            <!-- Legalidad Expanded -->
+            <span *ngIf="set.data.legalities.expanded"
+                  [ngClass]="{'legal': set.data.legalities.expanded === 'Legal', 'banned': set.data.legalities.expanded === 'Banned'}">
+              Expanded
+            </span>
+            <!-- Legalidad Standard -->
+            <span *ngIf="set.data.legalities.standard"
+                  [ngClass]="{'legal': set.data.legalities.standard === 'Legal', 'banned': set.data.legalities.standard === 'Banned'}">
+              Standard
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column2">
+        <div class="expansion-name">
+          <h1>{{ set.data.name }}</h1>
+        </div>
+        <div class="resources-bar">
+          <span><i class="fa-solid fa-calendar"></i> Release Date: {{ set.data.releaseDate }}</span>
+          <br>
+          <span><i class="fa-solid fa-layer-group"></i> Total Cards: {{ set.data.printedTotal }}</span>
+          <br>
+          <span><i class="fa-solid fa-cubes"></i> Series: {{ set.data.series }}</span>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && cardsByRarity">
+    <ng-container *ngFor="let rarity of getRarities()">
+      <div class="rarity-section">
+        <h2>{{ rarity }}</h2>
+        <div class="cards">
+          <div *ngFor="let card of cardsByRarity[rarity]" class="card">
+            <img [src]="card.images.small" alt="{{ card.name }}" class="card-image">
+            <p>{{ card.name }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

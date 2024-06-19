@@ -20,7 +20,7 @@ export class StandardComponent {
   mazos: any[] = []; // Inicializa como array
   userid:number=0;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 9;
   paginatedDecks: any[] = [];
   totalPages: number = 0;
   tipo: string = '';
@@ -77,6 +77,17 @@ export class StandardComponent {
             deckcards: deck.deckCards,
             price: 0
           }));
+
+          this.mazos.forEach(mazo => {
+            this.trainerService.getTrainerByUserIddeck(mazo.trainerId)
+              .subscribe(trainer => {
+                mazo.trainer = {
+                  username: trainer.username,
+                  image: trainer.image ? `data:image/jpeg;base64,${trainer.image}` : 'default-image-url'
+                };
+                this.updatePaginatedDecks(); // Actualizar decks después de obtener la información del entrenador
+              });
+          });
           this.calculateDeckPrices();
 
 

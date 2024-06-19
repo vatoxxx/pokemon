@@ -1,18 +1,59 @@
 <div class="container">
-
-<div *ngIf="trainerDetails" class="user-detail">
-  <div class="user-detail-header">
-    <img *ngIf="trainerDetails.image" [src]="trainerDetails.image" class="trainer-avatar rounded-circle" height="100px" alt="Imagen del Entrenador">
-    <div class="user-info">
-      <h2>{{ trainerDetails.username }}</h2>
-      <p>{{ trainerDetails.biografia }}</p>
+  <div *ngIf="trainerDetails" class="user-detail">
+    <div class="user-detail-header">
+      <img *ngIf="trainerDetails.image" [src]="trainerDetails.image" class="trainer-avatar" height="150px" width="200px" alt="Imagen del Entrenador">
+      <div class="user-info">
+        <h2>{{ trainerDetails.username }}</h2>
+        <p>Biografia:</p>
+        <p>{{ trainerDetails.biografia }}</p>
+      </div>
+    </div>
+    <div class="site-stats">
+      <h3>Stats</h3>
       <p>Número de mazos creados: {{ trainerDetails.numberOfDecks }}</p>
+      <p>Comentarios: {{ trainerDetails.numberOfComments }}</p> <!-- Mostrar número de comentarios -->
+    </div>
+    <div class="recent-decks">
+      <h3>Mazos Recientes</h3>
+
+
+
+      <div *ngIf="mazos.length > 0;" class="grid">
+        <div *ngFor="let mazo of paginatedDecks; let i = index" class="card">
+          <div class="card__img">
+            <img [src]="mazo.image" alt="Imagen del Mazo" [routerLink]="['/Decks', mazo.id]">
+          </div>
+          <div class="card__info">
+            <div class="card__header">
+              <span class="card__type">{{ mazo.type }}</span>
+              <span class="card__price">{{ mazo.price}}€</span>
+            </div>
+            <h3 class="card__title">{{ mazo.name }}</h3>
+            <p class="card__description">{{ mazo.description }}</p>
+            <div class="card__footer">
+              <div class="card__author-info">
+                <img *ngIf="mazo.trainer && mazo.trainer.image" [src]="mazo.trainer.image" class="trainer-avatar rounded-circle" height="30px" width="35px" alt="Imagen del Entrenador">
+                <a class="card__author" *ngIf="mazo.trainer" [routerLink]="['/User-detail', mazo.trainer.username]">{{ mazo.trainer.username }}</a>
+              </div>
+              <span class="card__time">{{ mazo.time }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
-</div>
-</div>
-
-<div *ngIf="!trainerDetails" class="loading">
-  <div class="spinner"></div>
-  <p>Cargando detalles del entrenador...</p>
+  <div *ngIf="!trainerDetails" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando detalles del entrenador...</p>
+  </div>
 </div>

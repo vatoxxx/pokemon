@@ -16,7 +16,7 @@ export class UserDecksComponent implements OnInit {
   mazos: any[] = []; // Inicializa como array
   userid:number=0;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 9;
   paginatedDecks: any[] = [];
   totalPages: number = 0;
 
@@ -80,7 +80,7 @@ export class UserDecksComponent implements OnInit {
           })
       );
       Promise.all(cardRequests).then(() => {
-        mazo.price = totalPrice;
+        mazo.price = totalPrice.toFixed(2);
         this.updatePaginatedDecks();
       }).catch(error => {
         console.error('Error al obtener los precios de las cartas:', error);

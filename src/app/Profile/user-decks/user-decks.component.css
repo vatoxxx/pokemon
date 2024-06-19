@@ -51,6 +51,10 @@
   margin-bottom: 5%;
 }
 
+h1{
+  color: whitesmoke !important;
+}
+
 .grid {
   display: grid;
   gap: 16px;

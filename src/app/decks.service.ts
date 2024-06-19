@@ -32,11 +32,15 @@ export interface CommentRequestDTO {
 export interface CommentResponseDTO {
   id: number;
   content: string;
-  creationDateTime: string;
+  creationDateTime: number[];
   deckId: number;
   trainerId: number;
   likes: number;
   dislikes: number;
+  trainer?: {
+    username: string;
+    image: string;
+  };
 }
 
 @Injectable({

@@ -4,6 +4,7 @@
 </div>
 
 <div class="container" *ngIf="!isLoading && mazos && !delayLoader">
+  <h1>Todos los Mazos</h1>
   <div *ngIf="mazos.length > 0; else noDecks" class="grid">
     <div *ngFor="let mazo of paginatedDecks; let i = index" class="card">
       <div class="card__img">
@@ -12,7 +13,7 @@
       <div class="card__info">
         <div class="card__header">
           <span class="card__type">{{ mazo.type }}</span>
-          <span class="card__price">{{ mazo.price | currency }}</span>
+          <span class="card__price">{{ mazo.price}}€</span>
         </div>
         <h3 class="card__title">{{ mazo.name }}</h3>
         <p class="card__description">{{ mazo.description }}</p>

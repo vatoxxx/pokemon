@@ -10,12 +10,12 @@ export class BodyComponent {
 
   slides = [
     {
-      image: 'assets/temporalforces.jpg',
+      image: 'assets/wallpaper1.jpg',
       captionTitle: 'Bienvenido a PokePlanner',
       captionText: 'Descubre nuestra base de datos de cartas y expansiones de Pokémon'
     },
     {
-      image: 'assets/paldeanfates.jpg',
+      image: 'assets/wallpaper4.png',
       captionTitle: 'Explora Nuestro Catálogo de Mazos',
       captionText: 'Encuentra y crea los mejores mazos'
     },

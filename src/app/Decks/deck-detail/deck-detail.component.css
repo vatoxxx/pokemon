@@ -1,15 +1,14 @@
 .container {
   margin-top: 10%;
   margin-bottom: 8%;
-  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   position: relative;
   overflow: hidden;
   width: 950px;
   max-width: 100%;
   min-height: 480px;
   padding: 20px;
+  color: whitesmoke;
 }
 
 .header {
@@ -22,6 +21,8 @@
 
 .header h1 {
   margin: 0;
+  font-size: 80px;
+  color: rgb(237, 180, 67);
 }
 
 .header p {
@@ -51,8 +52,14 @@
 }
 
 .description {
+  margin-top: 5%;
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 5%;
+}
+
+.card{
+  background-color: transparent;
+  color: whitesmoke;
 }
 
 .card-list {
@@ -77,12 +84,14 @@
   margin: 0 auto;
 }
 
-.comment-form, .comments {
+.comment-form,
+.comments {
   padding: 20px;
   border-top: 1px solid #ddd;
 }
 
-.comment-form h3, .comments h3 {
+.comment-form h3,
+.comments h3 {
   margin-top: 0;
 }
 
@@ -109,21 +118,87 @@
   background-color: #0056b3;
 }
 
-.comments div {
-  margin-bottom: 20px;
+.comments {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  color: bla;
 }
 
-.comments p {
-  margin: 5px 0;
+.comments h3 {
+  margin-top: 0;
 }
 
-.comments div button {
+.comment-container {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.comment-container img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   margin-right: 10px;
+}
+
+.comment-content {
+  margin-left: 50px; /* Ajustar el margen para dejar espacio a la imagen del usuario */
+}
+
+.comment-actions {
+  margin-top: 10px;
+}
+
+.comment-actions button {
   background: none;
   border: none;
   cursor: pointer;
+  color: #007bff;
+  margin-right: 10px;
 }
 
-.comments div button:hover {
+.comment-actions button:hover {
   text-decoration: underline;
+}
+
+.commentl {
+  border: 1px solid whitesmoke; /* Añade un borde sólido de 1px blanco alrededor de cada comentario */
+  margin-bottom: 20px; /* Espacio entre comentarios */
+  padding: 10px; /* Espacio interno dentro de cada comentario */
+}
+
+.commentf {
+  display: flex;
+  align-items: center;
+  color: #007bff; /* Color de texto para el nombre de usuario */
+  margin-bottom: 10px; /* Espacio entre la información del usuario y el contenido del comentario */
+}
+
+.commentf a:last-child{
+  margin-left: 3%;
+  color: #ffffff; /* Color de texto para el nombre de usuario */
+  margin-top: 2px;
+}
+
+.commentf img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Añade bordes redondeados a la imagen del usuario */
+  margin-right: 10px; /* Espacio a la derecha de la imagen del usuario */
+}
+
+.commentf p {
+  font-size: 20px; /* Tamaño de fuente del nombre de usuario */
+  margin: 0; /* Elimina el margen predeterminado de los párrafos */
+}
+
+.comment-content {
+  font-size: 16px; /* Tamaño de fuente del contenido del comentario */
+  margin-left: 60px; /* Espacio a la izquierda del contenido del comentario para dejar espacio a la imagen del usuario */
+}
+
+.content{
+  margin-top: 5%;
+  margin-left: 10%;
 }

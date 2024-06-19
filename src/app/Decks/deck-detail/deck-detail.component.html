@@ -6,20 +6,27 @@
         <p>TCGplayer: ${{ tcgplayerTotal }}</p>
         <p>Cardmarket: €{{ cardmarketTotal }}</p>
       </div>
-      <img [src]="trainer?.image" alt="{{ trainer?.username }}" width="50" height="50">
-      <a>{{ trainer?.username }}</a>
+      <div class="trainer-info">
+        <img [src]="trainer?.image" alt="{{ trainer?.username }}">
+        <a [routerLink]="['/User-detail', trainer?.username]">{{ trainer?.username }}</a>
+      </div>
     </div>
 
-    <img [src]="mazos.image" alt="{{ mazos.name }}">
+    <div class="deck-image">
+      <img [src]="mazos.image" alt="{{ mazos.name }}">
+    </div>
 
     <div class="description">
       <h2>Descripción</h2>
       <p>{{ mazos.description }}</p>
     </div>
 
-    <div *ngFor="let card of deck">
-      <img *ngIf="card.image" [src]="card.image" alt="{{ card.cardid }}">
-      <p>Quantity: {{ card.quantity }}</p>
+    <div class="card-list">
+      <h2>Main Deck</h2>
+      <div *ngFor="let card of deck" class="card">
+        <img *ngIf="card.image" [src]="card.image" alt="{{ card.cardid }}">
+        <p>X{{ card.quantity }}</p>
+      </div>
     </div>
 
     <div class="comment-form">
@@ -30,13 +37,25 @@
 
     <div class="comments">
       <h3>Comments</h3>
-      <div *ngFor="let comment of comments">
-        <p>{{ comment.content }}</p>
-        <div>
-          <button (click)="likeComment(comment)">👍 {{ comment.likes }}</button>
-          <button (click)="dislikeComment(comment)">👎 {{ comment.dislikes }}</button>
+      <br>
+
+
+      <div *ngFor="let comment of comments;let i = index" class="commentl">
+        <div class="commentf">
+          <img [src]="trainerc[i]?.image" alt="{{ trainerc[i]?.username }}" height="50px">
+          <a [routerLink]="['/User-detail', trainerc[i]?.username]">{{ trainerc[i]?.username }}</a>
+
+            <a>- {{ formatCommentDate(comment.creationDateTime) }}</a>
+
+
         </div>
+        <div class="content">
+          <p>{{ comment.content }}</p>
+        </div>
+
       </div>
     </div>
+
+
   </div>
 </div>

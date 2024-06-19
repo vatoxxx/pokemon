@@ -205,6 +205,16 @@ getUnlimitedBanned(): Observable<any> {
 }
 
 
+searchCardsBySetName(setName: string): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  const query = `set.name:"${setName}"`;
+  return this.http.get<any>(`${this.apiUrl}?q=${query}&orderBy=rarity`, { headers });
+}
+
+
 
 
 

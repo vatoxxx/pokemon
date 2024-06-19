@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DeckDTO } from './decks.service';
 
 export interface TrainersDTO {
   username: string;
   image: string;
   biografia: string;
   numberOfDecks: number;
+  numberOfComments:number;
 }
 
 @Injectable({
@@ -34,6 +36,9 @@ export class TrainerService {
   }
 
 
+  getDecksByTrainerUsername(username: string): Observable<DeckDTO[]> {
+    return this.http.get<DeckDTO[]>(`http://localhost:8081/api/decks/byTraineru/${username}`);
+  }
 
 
 

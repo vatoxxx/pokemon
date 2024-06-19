@@ -7,6 +7,9 @@
   margin-top: 85px;
 }
 
+
+
+
 .carousel,
 .carousel-inner,
 .carousel-item {
@@ -16,8 +19,7 @@
 .carousel-item img {
   object-fit: cover;
   height: 90vh;
-  width: 100%;
-  filter: brightness(70%);
+  filter: brightness(40%);
 }
 
 .carousel-caption {

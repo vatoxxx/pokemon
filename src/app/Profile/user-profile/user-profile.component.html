@@ -3,13 +3,13 @@
   <p>Cargando...</p>
 </div>
 
-<div class="container"  *ngIf="!isLoading && !delayLoader">
+<div class="container" *ngIf="!isLoading && !delayLoader">
   <h1 class="profile-title">Tu Perfil</h1>
   <div *ngIf="currentUser">
     <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
       <div class="profile-info">
         <div class="profile-picture">
-          <img [src]="currentUser.photo" alt="Profile Picture">
+          <img [src]="imagePreview || currentUser.photo" alt="Profile Picture">
         </div>
         <div class="user-details">
           <p class="username">{{ currentUser.username }}</p>
@@ -21,7 +21,6 @@
         <input type="file" (change)="onFileSelected($event)" class="file-input">
       </label>
       <div class="bio">
-
         <label for="bio">Biografía</label>
         <textarea [(ngModel)]="currentUser.bio" name="bio" id="bio" class="form-control" rows="3"></textarea>
       </div>

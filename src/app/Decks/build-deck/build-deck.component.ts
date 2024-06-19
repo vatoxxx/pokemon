@@ -3,6 +3,7 @@ import { PokemonCard, PokemonService, PokemonSet } from '../../pokemon.service';
 import { DecksService } from '../../decks.service';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-build-deck',
@@ -40,7 +41,8 @@ export class BuildDeckComponent {
 
   currentTotalQuantity: number = 0; // Define currentTotalQuantity as a property
 
-  constructor(private pokemonService: PokemonService, private decks: DecksService,private authService:AuthService) {}
+  constructor(private pokemonService: PokemonService, private decks: DecksService,private authService:AuthService,private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.searchCards();
@@ -159,6 +161,9 @@ export class BuildDeckComponent {
         console.log('Deck creado exitosamente:', response);
         const deckId = response.id;
         this.resetDeckForm();
+        this.router.navigate(['/User-Decks']).then(() => {
+          window.location.reload(); // Forzar la recarga de la página
+        });
       },
       (error) => {
         console.error('Error al crear el deck:', error);
