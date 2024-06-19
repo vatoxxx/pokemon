@@ -23,6 +23,9 @@ export class UserDecksComponent implements OnInit {
   isLoading: boolean = true;  // Variable para el estado de carga
   delayLoader: boolean = true; // Variable para el delay del loader
 
+  showDeleteConfirm: boolean = false; // Estado para mostrar la confirmación de eliminación
+  deckToDelete: number | null = null; // ID del deck a eliminar
+
   constructor(private route: ActivatedRoute, private deckService: DecksService, private authservice: AuthService, private pokemonservice: PokemonService) { }
 
   ngOnInit(): void {
@@ -74,7 +77,6 @@ export class UserDecksComponent implements OnInit {
       let cardRequests = mazo.deckcards.map((card: { cardid: string | null; quantity: number; }) =>
         this.pokemonservice.getPokemonCardById(card.cardid).toPromise()
           .then(response => {
-            console.log(response);
             const cardPrice = response.data.cardmarket.prices.averageSellPrice;
             totalPrice += cardPrice * card.quantity;
           })
@@ -108,4 +110,33 @@ export class UserDecksComponent implements OnInit {
       this.updatePaginatedDecks();
     }
   }
+
+  confirmDeleteDeck(deckId: number): void {
+    this.deckToDelete = deckId;
+    this.showDeleteConfirm = true;
+  }
+
+  deleteDeck(): void {
+    if (this.deckToDelete !== null) {
+      this.deckService.deleteDeck(this.deckToDelete).subscribe(
+        () => {
+          this.mazos = this.mazos.filter(deck => deck.id !== this.deckToDelete);
+          this.updatePaginatedDecks();
+          this.showDeleteConfirm = false;
+          this.deckToDelete = null;
+        },
+        (error) => {
+          console.error('Error al eliminar el mazo:', error);
+          this.showDeleteConfirm = false;
+          this.deckToDelete = null;
+        }
+      );
+    }
+  }
+
+  cancelDelete(): void {
+    this.showDeleteConfirm = false;
+    this.deckToDelete = null;
+  }
 }
+

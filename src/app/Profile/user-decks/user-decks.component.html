@@ -6,7 +6,7 @@
 
 <div class="container" *ngIf="!isLoading && mazos && !delayLoader">
   <h1>Tus Mazos</h1>
-  <div class="grid">
+  <div *ngIf="mazos.length > 0; else noDecks" class="grid">
     <div *ngFor="let mazo of paginatedDecks; let i = index" class="card">
       <div class="card__img">
         <img [src]="mazo.image" alt="Imagen del Mazo" [routerLink]="['/Decks', mazo.id]">
@@ -19,8 +19,12 @@
         <h3 class="card__title">{{ mazo.name }}</h3>
         <p class="card__description">{{ mazo.description }}</p>
         <div class="card__footer">
-          <span class="card__author">{{ mazo.author }}</span>
+          <div class="card__author-info">
+            <img *ngIf="mazo.trainer && mazo.trainer.image" [src]="mazo.trainer.image" class="trainer-avatar rounded-circle" height="30px" width="35px" alt="Imagen del Entrenador">
+            <a class="card__author" *ngIf="mazo.trainer" [routerLink]="['/User-detail', mazo.trainer.username]">{{ mazo.trainer.username }}</a>
+          </div>
           <span class="card__time">{{ mazo.time }}</span>
+          <button (click)="confirmDeleteDeck(mazo.id)" class="delete-button">Eliminar</button>
         </div>
       </div>
     </div>
@@ -29,4 +33,21 @@
     <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
+</div>
+
+<ng-template #noDecks>
+  <div class="no-decks-container">
+    <div class="no-decks-message">
+      No Tienes mazos creados.
+    </div>
+    <div class="no-decks-actions">
+      <button routerLink="/Build">Crea un mazo</button>
+    </div>
+  </div>
+</ng-template>
+
+<div *ngIf="showDeleteConfirm" class="delete-confirm-container">
+  <p>¿Estás seguro de que deseas eliminar este deck?</p>
+  <button (click)="deleteDeck()">Sí</button>
+  <button (click)="cancelDelete()">No</button>
 </div>

@@ -36,7 +36,7 @@ const routes: Routes = [
 { path: 'Decks/Type/:tipo', component: StandardComponent },
 { path: 'User-detail/:username', component: UserDetailComponent },
 { path: 'Favorite-cards', component: UserFavcardsComponent },
-{ path: 'reset-password', component: RestablecerComponent },
+{ path: 'reset-password', component: RestablecerComponent},
 { path: '**', redirectTo: '/Home' },
 
 

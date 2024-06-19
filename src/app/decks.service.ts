@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { PokemonCard } from './pokemon.service';
+import { AuthService } from './auth.service';
 
 export interface DeckDTO {
   id: number;
@@ -52,7 +53,7 @@ export class DecksService {
   private commentsUrl = 'http://localhost:8081/api/comments';
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,private authService: AuthService) { }
 
 
   veralldecks(): Observable<DeckDTO[]> {
@@ -132,6 +133,9 @@ export class DecksService {
     return this.http.post<CommentResponseDTO>(`${this.commentsUrl}/add`, comment);
   }
 
+  deleteDeck(deckId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${deckId}`);
+  }
 
 
 

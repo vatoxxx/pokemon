@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, interval, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { JwtHelper } from './JwtHelper';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = 'http://localhost:8081/api/auth';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
+  private tokenCheckSubscription: Subscription | undefined;
 
   constructor(private http: HttpClient, private router: Router) {
     const token = localStorage.getItem('token');
     this.currentUserSubject = new BehaviorSubject<any>(token ? { token } : null);
     this.currentUser = this.currentUserSubject.asObservable();
+
+    if (token) {
+      this.startTokenExpirationCheck();
+    }
   }
 
   public get currentUserValue(): any {
@@ -23,6 +29,7 @@ export class AuthService {
   updateCurrentUser(user: any) {
     this.currentUserSubject.next(user);
     this.saveUserToLocalStorage(user);
+    this.startTokenExpirationCheck();
   }
 
   saveUserToLocalStorage(user: any) {
@@ -48,6 +55,7 @@ export class AuthService {
       map(response => {
         localStorage.setItem('token', response.jwt);
         this.currentUserSubject.next({ token: response.jwt });
+        this.startTokenExpirationCheck();
         return response;
       }),
       catchError(error => throwError(error))
@@ -57,11 +65,34 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.currentUserSubject.next(null);
+    this.stopTokenExpirationCheck();
     this.router.navigate(['/Login']);
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    return !!token && !JwtHelper.isTokenExpired(token);
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  private startTokenExpirationCheck() {
+    this.stopTokenExpirationCheck();
+    this.tokenCheckSubscription = interval(1000 * 60).subscribe(() => {  // Check every minute
+      const token = this.getToken();
+      if (JwtHelper.isTokenExpired(token)) {
+        this.logout();
+      }
+    });
+  }
+
+  private stopTokenExpirationCheck() {
+    if (this.tokenCheckSubscription) {
+      this.tokenCheckSubscription.unsubscribe();
+      this.tokenCheckSubscription = undefined;
+    }
   }
 
 
@@ -74,6 +105,7 @@ export class AuthService {
     const url = `${this.baseUrl}/password-reset/confirm`;
     return this.http.post(url, { token: token, newPassword: newPassword });
   }
+
 
 
 
