@@ -20,7 +20,7 @@ export class BodyComponent {
       captionText: 'Encuentra y crea los mejores mazos'
     },
     {
-      image: 'assets/paradoxrift.jpg',
+      image: 'assets/obsidianflames.jpg',
       captionTitle: 'Construye y Comparte',
       captionText: 'Crea y comparte tus mazos con la comunidad'
     }
