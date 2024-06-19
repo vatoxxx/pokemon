@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,25 +9,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
-  email: string = '';
-  forgotEmail: string = '';
-  roles: string[] = ['USER']; // Default role, you can add more roles as needed
+  registerForm: FormGroup;
+  loginForm: FormGroup;
+  forgotPasswordForm: FormGroup;
   error: string = '';
   container!: HTMLDivElement;
   overlayBackground!: HTMLDivElement;
-  forgotPasswordForm!: HTMLDivElement;
+  forgotPasswordFormElement!: HTMLDivElement;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.maxLength(12)]]
+    });
+
+    this.loginForm = this.fb.group({
+      emailOrUsername: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.maxLength(12)]]
+    });
+
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
 
   ngOnInit(): void {
-    // Ensure elements exist before adding event listeners
     const signUpButton = document.getElementById('signUp') as HTMLButtonElement;
     const signInButton = document.getElementById('signIn') as HTMLButtonElement;
     this.container = document.getElementById('containerl') as HTMLDivElement;
     this.overlayBackground = document.getElementById('overlayBackground') as HTMLDivElement;
-    this.forgotPasswordForm = document.getElementById('forgotPasswordForm') as HTMLDivElement;
+    this.forgotPasswordFormElement = document.getElementById('forgotPasswordForm') as HTMLDivElement;
 
     if (signUpButton && signInButton && this.container) {
       signUpButton.addEventListener('click', () => {
@@ -42,7 +59,13 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    this.authService.register(this.email, this.username, this.password, this.roles).subscribe({
+    if (this.registerForm.invalid) {
+      this.error = 'Please correct the errors in the form.';
+      return;
+    }
+
+    const { email, username, password } = this.registerForm.value;
+    this.authService.register(email, username, password, ['USER']).subscribe({
       next: () => {
         this.router.navigate(['/Login']);
         if (this.container) {
@@ -59,7 +82,13 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.email, this.password).subscribe({
+    if (this.loginForm.invalid) {
+      this.error = 'Please correct the errors in the form.';
+      return;
+    }
+
+    const { emailOrUsername, password } = this.loginForm.value;
+    this.authService.login(emailOrUsername, password).subscribe({
       next: response => {
         this.router.navigate(['/']);
       },
@@ -72,12 +101,12 @@ export class LoginComponent implements OnInit {
 
   openForgotPassword() {
     this.overlayBackground.style.display = 'block';
-    this.forgotPasswordForm.style.display = 'flex';
+    this.forgotPasswordFormElement.style.display = 'flex';
   }
 
   closeForgotPassword() {
     this.overlayBackground.style.display = 'none';
-    this.forgotPasswordForm.style.display = 'none';
+    this.forgotPasswordFormElement.style.display = 'none';
   }
 
   openSignUp() {
@@ -86,7 +115,13 @@ export class LoginComponent implements OnInit {
   }
 
   sendForgotPasswordEmail() {
-    this.authService.sendPasswordResetEmail(this.forgotEmail).subscribe({
+    if (this.forgotPasswordForm.invalid) {
+      this.error = 'Please enter a valid email.';
+      return;
+    }
+
+    const { email } = this.forgotPasswordForm.value;
+    this.authService.sendPasswordResetEmail(email).subscribe({
       next: () => {
         alert('Password reset email sent successfully.');
         this.closeForgotPassword();

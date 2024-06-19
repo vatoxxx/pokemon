@@ -4,6 +4,7 @@ import { CommentRequestDTO, CommentResponseDTO, DecksService } from '../../decks
 import { PokemonService } from '../../pokemon.service';
 import { TrainerService } from '../../trainer.service'; // Asegúrate de tener este servicio importado
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-deck-detail',
@@ -24,7 +25,7 @@ export class DeckDetailComponent implements OnInit {
   newComment: CommentRequestDTO = {
     content: '',
     deckId: 0,
-    trainerId: 1,
+    trainerId: 0,
     likes: 0,
     dislikes: 0
   };
@@ -37,7 +38,8 @@ export class DeckDetailComponent implements OnInit {
     private decks: DecksService,
     private pokemon: PokemonService,
     private trainerService: TrainerService,
-  private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -78,6 +80,14 @@ export class DeckDetailComponent implements OnInit {
       });
 
       this.loadComments(parseInt(deckId, 10));
+    }
+
+    const token = this.authService.getToken();
+    if (token) {
+      const decodedToken: any = this.authService.decodeAndSetCurrentUser(token);
+      if (decodedToken) {
+        this.newComment.trainerId = decodedToken.userid;
+      }
     }
   }
 
@@ -123,6 +133,7 @@ export class DeckDetailComponent implements OnInit {
     this.decks.addComment(this.newComment).subscribe(data => {
       this.comments.push(data);
       this.newComment.content = '';
+      location.reload();
     });
   }
 

@@ -67,11 +67,13 @@
     <h2>Deck Actual Cartas = {{ this.currentTotalQuantity }}</h2>
     <div class="row">
       <div *ngFor="let card of deck" class="col-md-2">
-        <a class="product-card">
-          <img [src]="card.images.small" alt="{{ card.name }}" class="deck-card__image" />
+        <a class="product-card" (click)="removeFromDeck(card)">
+          <img [src]="card.images?.small || 'assets/default-image.jpg'" alt="{{ card.name }}" class="deck-card__image" />
           <p>{{card.quantity}}</p>
         </a>
       </div>
+
+
     </div>
     <button (click)="openDeckForm()" class="save-deck-button">Guardar Deck</button>
   </div>

@@ -3,25 +3,26 @@
     <div class="gradient-overlay">
       <div class="containerl" id="containerl">
         <div class="form-container sign-up-container">
-          <form (ngSubmit)="register()">
+          <form [formGroup]="registerForm" (ngSubmit)="register()">
             <h1>Crea Una Cuenta</h1>
             <br>
-            <input type="text" id="username" [(ngModel)]="username" name="username" placeholder="Ash Ketchum" />
-            <input type="email" id="email" [(ngModel)]="email" name="email" required>
-            <input type="password" id="contraseña" [(ngModel)]="password" name="contraseña" required>
+            <input type="text" id="username" formControlName="username" placeholder="Ash Ketchum" />
+            <input type="email" id="email" formControlName="email" placeholder="Correo electrónico" required>
+            <input type="password" id="password" formControlName="password" placeholder="Contraseña (máximo 12 caracteres)" required>
             <br>
             <button type="submit">Regístrate</button>
-            <div *ngIf="error">{{ error }}</div>
+            <div *ngIf="registerForm.invalid && registerForm.touched">{{ error }}</div>
           </form>
         </div>
         <div class="form-container sign-in-container">
-          <form (ngSubmit)="login()">
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
             <h1>Inicia Sesión</h1>
             <br>
-            <input type="text" id="email" [(ngModel)]="email" name="email" required>
-            <input type="password" id="password" [(ngModel)]="password" name="password" required>
+            <input type="text" id="emailOrUsername" formControlName="emailOrUsername" placeholder="Correo electrónico o nombre de usuario" required>
+            <input type="password" id="password" formControlName="password" placeholder="Contraseña" required>
             <a (click)="openForgotPassword()">¿Olvidaste tu contraseña?</a>
             <button type="submit">Inicia sesión</button>
+            <div *ngIf="loginForm.invalid && loginForm.touched">{{ error }}</div>
           </form>
         </div>
         <div class="overlay-container">
@@ -49,10 +50,10 @@
   <div class="logo-containero">
     Olvidaste tu Contraseña
   </div>
-  <form class="formo" (ngSubmit)="sendForgotPasswordEmail()">
+  <form class="formo" [formGroup]="forgotPasswordForm" (ngSubmit)="sendForgotPasswordEmail()">
     <div class="form-groupo">
       <label for="email">Email</label>
-      <input type="text" id="forgotEmail" name="email" [(ngModel)]="forgotEmail" placeholder="Ingresa tu email" required>
+      <input type="text" id="forgotEmail" formControlName="email" placeholder="Ingresa tu email" required>
     </div>
     <button class="form-submit-btno" type="submit">Enviar Email</button>
   </form>

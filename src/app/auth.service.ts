@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, Subscription, interval, throwError } from 
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { JwtHelper } from './JwtHelper';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,7 +20,25 @@ export class AuthService {
 
     if (token) {
       this.startTokenExpirationCheck();
+      this.decodeAndSetCurrentUser(token);
     }
+
+  }
+
+
+  decodeAndSetCurrentUser(token: string) {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      this.currentUserSubject.next({ ...decodedToken, token });
+      return decodedToken;
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return null;
+    }
+  }
+
+  getCurrentUser() {
+    return this.currentUserSubject.value;
   }
 
   public get currentUserValue(): any {

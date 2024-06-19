@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeckDTO, DecksService } from '../../decks.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { jwtDecode } from 'jwt-decode';
 import { PokemonService } from '../../pokemon.service';
@@ -26,7 +26,7 @@ export class UserDecksComponent implements OnInit {
   showDeleteConfirm: boolean = false; // Estado para mostrar la confirmación de eliminación
   deckToDelete: number | null = null; // ID del deck a eliminar
 
-  constructor(private route: ActivatedRoute, private deckService: DecksService, private authservice: AuthService, private pokemonservice: PokemonService) { }
+  constructor(private router: Router,private route: ActivatedRoute, private deckService: DecksService, private authservice: AuthService, private pokemonservice: PokemonService) { }
 
   ngOnInit(): void {
     this.loadDecksByTrainer();
@@ -74,21 +74,24 @@ export class UserDecksComponent implements OnInit {
   calculateDeckPrices(): void {
     this.mazos.forEach(mazo => {
       let totalPrice = 0;
-      let cardRequests = mazo.deckcards.map((card: { cardid: string | null; quantity: number; }) =>
+      const cardRequests = mazo.deckcards.map((card: { cardid: string | null; quantity: number; }) =>
         this.pokemonservice.getPokemonCardById(card.cardid).toPromise()
           .then(response => {
-            const cardPrice = response.data.cardmarket.prices.averageSellPrice;
-            totalPrice += cardPrice * card.quantity;
+            const cardmarketPrice = response.data.cardmarket?.prices?.averageSellPrice || 0;
+            totalPrice += cardmarketPrice * card.quantity;
           })
       );
+
       Promise.all(cardRequests).then(() => {
-        mazo.price = totalPrice.toFixed(2);
+        mazo.price = parseFloat(totalPrice.toFixed(2));
         this.updatePaginatedDecks();
       }).catch(error => {
         console.error('Error al obtener los precios de las cartas:', error);
       });
     });
   }
+
+
 
   updatePaginatedDecks(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -137,6 +140,11 @@ export class UserDecksComponent implements OnInit {
   cancelDelete(): void {
     this.showDeleteConfirm = false;
     this.deckToDelete = null;
+  }
+
+  editDeck(deck: DeckDTO): void {
+    this.deckService.setDeckToEdit(deck);
+    this.router.navigate(['/Build']);
   }
 }
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { PokemonCard } from './pokemon.service';
 import { AuthService } from './auth.service';
 
@@ -52,9 +52,23 @@ export class DecksService {
   private baseUrl = 'http://localhost:8081/api/decks';
   private commentsUrl = 'http://localhost:8081/api/comments';
 
+  private deckToEditSubject = new BehaviorSubject<any>(null);
+  deckToEdit$ = this.deckToEditSubject.asObservable();
+  private deckToEdit: DeckDTO | null = null;
+
 
   constructor(private http: HttpClient, private router: Router,private authService: AuthService) { }
 
+
+  updateDeck(deckId: number, formData: FormData): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update/${deckId}`, formData)
+      .pipe(
+        catchError(error => {
+          console.error('Error al actualizar el deck:', error);
+          return throwError(error);
+        })
+      );
+  }
 
   veralldecks(): Observable<DeckDTO[]> {
 
@@ -135,6 +149,14 @@ export class DecksService {
 
   deleteDeck(deckId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${deckId}`);
+  }
+
+  setDeckToEdit(deck: DeckDTO): void {
+    this.deckToEdit = deck;
+  }
+
+  getDeckToEdit(): DeckDTO | null {
+    return this.deckToEdit;
   }
 
 

@@ -44,11 +44,54 @@ export class BuildDeckComponent {
   constructor(private pokemonService: PokemonService, private decks: DecksService,private authService:AuthService,private router: Router
   ) {}
 
+  deckToEdit: any = null;
+
   ngOnInit(): void {
+    this.deckToEdit = this.decks.getDeckToEdit();
+    console.log('Deck to edit:', this.deckToEdit);
+    if (this.deckToEdit) {
+      this.deckName = this.deckToEdit.name;
+      this.deckType = this.deckToEdit.type;
+      this.deckDescription = this.deckToEdit.description;
+      this.Deckimage = null;
+      console.log('Deck cards:', this.deckToEdit.deckcards);
+      if (Array.isArray(this.deckToEdit.deckcards)) {
+        this.deck = this.deckToEdit.deckcards.map((card: any) => ({
+          cardid: card.cardid,
+          quantity: card.quantity
+        }));
+
+        this.loadCardImages(this.deck);
+
+      } else {
+        this.deck = [];
+      }
+    }
     this.searchCards();
     this.loadFilters();
+  }
 
-
+  loadCardImages(deckcards: any[]): void {
+    let cardsProcessed = 0;
+    deckcards.forEach(card => {
+      this.pokemonService.getPokemonCardById(card.cardid).subscribe(
+        (data: any) => {
+          card.images = data.images || { small: 'assets/default-image.jpg', large: 'assets/default-image.jpg' };
+          cardsProcessed++;
+          if (cardsProcessed === deckcards.length) {
+            this.deck = [...deckcards]; // Trigger change detection
+          }
+        },
+        error => {
+          console.error(`Error al cargar la imagen de la carta con ID ${card.cardid}:`, error);
+          card.images = { small: 'assets/default-image.jpg', large: 'assets/default-image.jpg' }; // O una imagen por defecto
+          cardsProcessed++;
+          if (cardsProcessed === deckcards.length) {
+            this.deck = [...deckcards]; // Trigger change detection
+          }
+        }
+      );
+    });
   }
 
   loadFilters(): void {
@@ -135,40 +178,48 @@ export class BuildDeckComponent {
   }
 
   saveDeck() {
+    const currentTotalQuantity = this.deck.reduce((total, c) => total + c.quantity, 0);
+
+    if (currentTotalQuantity !== 60) {
+      alert('No se puede guardar un deck con menos de 60 cartas.');
+      return;
+    }
+
     const deckData = {
       name: this.deckName,
       type: this.deckType,
       description: this.deckDescription
     };
 
-    const sanitizedDeckCards = this.deck.map(card => {
-      return {
-        cardid: card.id,
-        quantity: card.quantity
-      };
-    });
+    const sanitizedDeckCards = this.deck.map(card => ({
+      cardid: card.id,
+      quantity: card.quantity
+    }));
 
     const deckCardsJson = JSON.stringify(sanitizedDeckCards);
 
     this.authService.currentUser.subscribe(user => {
       if (user && user.token) {
-       this.userid= this.decodeAndFetchTrainer(user.token);
+        this.userid = this.decodeAndFetchTrainer(user.token);
       }
     });
 
-    this.decks.createDeck(deckData, this.Deckimage, this.userid, deckCardsJson).subscribe(
-      (response) => {
-        console.log('Deck creado exitosamente:', response);
-        const deckId = response.id;
-        this.resetDeckForm();
-        this.router.navigate(['/User-Decks']).then(() => {
-          window.location.reload(); // Forzar la recarga de la página
-        });
-      },
-      (error) => {
-        console.error('Error al crear el deck:', error);
-      }
-    );
+    if (this.deckToEdit) {
+      this.updateDeck(deckData, this.Deckimage, this.userid, deckCardsJson, this.deckToEdit.id);
+    } else {
+      this.decks.createDeck(deckData, this.Deckimage, this.userid, deckCardsJson).subscribe(
+        (response) => {
+          console.log('Deck creado exitosamente:', response);
+          this.resetDeckForm();
+          this.router.navigate(['/User-Decks']).then(() => {
+            window.location.reload();
+          });
+        },
+        (error) => {
+          console.error('Error al crear el deck:', error);
+        }
+      );
+    }
   }
 
   decodeAndFetchTrainer(token: string) {
@@ -180,6 +231,18 @@ export class BuildDeckComponent {
 
     return userId;
 
+  }
+
+  removeFromDeck(card: PokemonCard): void {
+    const cardIndex = this.deck.findIndex(c => c.id === card.id);
+    if (cardIndex !== -1) {
+      this.deck[cardIndex].quantity--;
+      if (this.deck[cardIndex].quantity === 0) {
+        this.deck.splice(cardIndex, 1);
+      }
+    }
+    // Actualizar la cantidad total de cartas
+    this.currentTotalQuantity = this.deck.reduce((total, c) => total + c.quantity, 0);
   }
 
 
@@ -198,5 +261,28 @@ export class BuildDeckComponent {
     if (event.target.files.length > 0) {
       this.Deckimage = event.target.files[0];
     }
+  }
+
+  updateDeck(deckData: any, imageFile: File | null, userId: number, deckCardsJson: string, deckId: number) {
+    const formData = new FormData();
+    formData.append('deck', JSON.stringify(deckData));
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+    formData.append('userId', userId.toString());
+    formData.append('deckCards', deckCardsJson);
+
+    this.decks.updateDeck(deckId, formData).subscribe(
+      (response) => {
+        console.log('Deck actualizado exitosamente:', response);
+        this.resetDeckForm();
+        this.router.navigate(['/User-Decks']).then(() => {
+          window.location.reload();
+        });
+      },
+      (error) => {
+        console.error('Error al actualizar el deck:', error);
+      }
+    );
   }
 }

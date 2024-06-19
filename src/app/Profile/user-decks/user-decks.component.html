@@ -24,6 +24,7 @@
             <a class="card__author" *ngIf="mazo.trainer" [routerLink]="['/User-detail', mazo.trainer.username]">{{ mazo.trainer.username }}</a>
           </div>
           <span class="card__time">{{ mazo.time }}</span>
+          <button (click)="editDeck(mazo)">Editar</button>
           <button (click)="confirmDeleteDeck(mazo.id)" class="delete-button">Eliminar</button>
         </div>
       </div>

@@ -104,23 +104,21 @@ export class StandardComponent {
   calculateDeckPrices(): void {
     this.mazos.forEach(mazo => {
       let totalPrice = 0;
-      let cardRequests = mazo.deckcards.map((card: { cardid: string | null; quantity: number; }) =>
+      const cardRequests = mazo.deckcards.map((card: { cardid: string | null; quantity: number; }) =>
         this.pokemonservice.getPokemonCardById(card.cardid).toPromise()
           .then(response => {
-            console.log(response);
-            const cardPrice = response.data.cardmarket.prices.averageSellPrice;
-            totalPrice += cardPrice * card.quantity;
+            const cardmarketPrice = response.data.cardmarket?.prices?.averageSellPrice || 0;
+            totalPrice += cardmarketPrice * card.quantity;
           })
       );
+
       Promise.all(cardRequests).then(() => {
-        mazo.price = totalPrice;
+        mazo.price = parseFloat(totalPrice.toFixed(2));
         this.updatePaginatedDecks();
       }).catch(error => {
         console.error('Error al obtener los precios de las cartas:', error);
       });
     });
-
-
   }
 
   updatePaginatedDecks(): void {

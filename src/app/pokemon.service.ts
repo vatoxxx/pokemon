@@ -214,6 +214,15 @@ searchCardsBySetName(setName: string): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}?q=${query}&orderBy=rarity`, { headers });
 }
 
+getCardImages(cardIds: string[]): Observable<any> {
+  const headers = new HttpHeaders({
+    'X-Api-Key': this.apiKey
+  });
+
+  const query = cardIds.map(id => `id:${id}`).join(' OR ');
+  return this.http.get<any>(`${this.apiUrl}?q=${query}`, { headers });
+}
+
 
 
 
